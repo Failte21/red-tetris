@@ -1,0 +1,15 @@
+.tetris {
+    width: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .main {
+    }
+
+    .opponents {
+        display: flex;
+        flex-direction: column;
+    }
+}

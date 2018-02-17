@@ -1,11 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Board from '../components/board/board'
-
+import './app.scss'
 
 const App = () => {
   return (
-    <Board />
+      <div className={'tetris'}>
+          <div className={'main'}>
+              <Board size={'large'}/>
+          </div>
+          <div className={'opponents'}>
+              <Board size={'small'}/>
+              <Board size={'small'}/>
+              <Board size={'small'}/>
+          </div>
+      </div>
   )
 }
 

@@ -1,6 +1,11 @@
 import React from 'react'
 import './board.scss'
 
+const style = {
+    large: {width: '300px', height: '600px'},
+    small: {width: '90px', height: '180px'}
+}
+
 const mock = [
     [0,0,0,0,0,0,0,0,0,0],
     [0,0,0,0,0,0,0,0,0,0],
@@ -24,8 +29,8 @@ const mock = [
     [0,0,0,0,0,0,0,0,0,0]
 ]
 
-const Board = props => (
-    <div className={'board'}>
+const Board = ({size = 'large'}) => (
+    <div className={'board'} style={style[size]}>
         {
             mock.map(row => (
                 <div className={'row'}>
