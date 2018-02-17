@@ -12,13 +12,17 @@
     "coverage": "NODE_ENV=test nyc --include src --all -r text -r lcov -r text --require babel-core/register mocha "
   },
   "dependencies": {
+    "css-loader": "^0.28.9",
+    "node-sass": "^4.7.2",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.0.1",
-    "socket.io": "^1.4.6"
+    "sass-loader": "^6.0.6",
+    "socket.io": "^1.4.6",
+    "style-loader": "^0.20.2"
   },
   "devDependencies": {
     "babel-cli": "^6.7.7",
