@@ -1,2 +1,5 @@
 export const SERVER_PING = 'SERVER_PING'
 export const ALERT_POP = 'ALERT_POP'
+export const ADD_PLAYER = 'ADD_PLAYER'
+export const START_FAILURE = 'START_FAILURE'
+export const START_SUCCESS = 'START_SUCCESS'

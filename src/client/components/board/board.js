@@ -32,10 +32,10 @@ const mock = [
 const Board = ({size = 'large'}) => (
     <div className={'board'} style={style[size]}>
         {
-            mock.map(row => (
-                <div className={'row'}>
-                    {row.map(cell => (
-                        <div className={'cell'}></div>
+            mock.map((row, i) => (
+                <div key={i} className={'row'}>
+                    {row.map((cell, i) => (
+                        <div key={i} className={'cell'}></div>
                     ))}
                 </div>
             ))

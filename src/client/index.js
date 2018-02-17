@@ -6,8 +6,8 @@ import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'                                                                                                                                                    
 import storeStateMiddleWare from './middleware/storeStateMiddleWare'
 import reducer from './reducers'
-import App from './containers/app'
 import {alert} from './actions/alert'
+import AppRouter from './appRouter'
 
 const initialState = {}
 
@@ -19,7 +19,7 @@ const store = createStore(
 
 ReactDom.render((
   <Provider store={store}>
-    <App/>
+    <AppRouter/>
   </Provider>
 ), document.getElementById('tetris'))
 
