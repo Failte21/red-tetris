@@ -1,0 +1,18 @@
+.board {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 600px;
+  margin: auto;
+
+  .row {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+
+    .cell {
+      flex: 1;
+      border: solid black 1px;
+    }
+  }
+}
