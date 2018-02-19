@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "css-loader": "^0.28.9",
+    "lodash": "^4.17.5",
     "node-sass": "^4.7.2",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
