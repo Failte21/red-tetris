@@ -9,6 +9,5 @@ export const parseOptions = options => dispatch => {
     const splittedOptions = options.split(/\[|]/);
     const [boardName, playerName] = splittedOptions
     dispatch({type: SERVER_ADD_PLAYER, payload: {playerName, boardName }})
-    // dispatch({type: ADD_PLAYER, payload: playerName})
     // dispatch({type: START_SUCCESS, payload: boardName})
 }

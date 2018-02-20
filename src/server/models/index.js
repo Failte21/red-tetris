@@ -14,14 +14,13 @@ export class Games {
 		return _.find(this.players, {playerName: playerName})
 	}
 
-	newGame = (boardName, playerName, socketId) => {
-		if (!this.getPlayerByName(playerName)) this.newPlayer(playerName, socketId)
+	newGame = (boardName, playerName) => {
+		if (!this.getPlayerByName(playerName)) throw new Error('player not instantiated')
 		const gameInstance = new Game(boardName, playerName)
 		this.games.push(gameInstance)
 	}
 
 	newPlayer = (playerName, socketId) => {
-		console.log(playerName, socketId)
 		const player = new Player(playerName, socketId)
 		this.players.push(player)
 	}
@@ -84,11 +83,11 @@ class GameModel {
 		this.boardName = boardName
 		this.leadPlayerName = leadPlayerName //player who inits game
 		this.playerNames = [leadPlayerName]
-		this.playerNamesStillInGame = []
 		this.pieceLineUp = []
 		this.hasStarted = false
 		this.hasEnded = false
-		this.winner = null
+		this.winnerName = null
+		this.startError = null
 	}
 }
 
