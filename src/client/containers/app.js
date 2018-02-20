@@ -5,18 +5,27 @@ import Board from '../components/board/board'
 import './app.scss'
 import { parseOptions } from '../actions/gameActions'
 
-const App = ({match, parseOptions}) => {
+const App = ({match, parseOptions, boardName, startError, playerName, playerNames}) => {
 
     parseOptions(match.params.boardOptions)
+    console.log('remaking App component')
+
     return (
         <div className={'tetris'}>
-            <div className={'main'}>
+            {playerName}
+            {!startError && <div className={'main'}>
                 <Board size={'large'}/>
-            </div>
+            </div>}
             <div className={'opponents'}>
-                <Board size={'small'}/>
-                <Board size={'small'}/>
-                <Board size={'small'}/>
+                {playerNames.map((o, i) => {
+                    if (o !== playerName)
+                        return (
+                            <div>
+                                <Board key={i} size={'small'}/>
+                                {o}
+                            </div>
+                        )
+                })}
             </div>
         </div>
     )
@@ -24,7 +33,11 @@ const App = ({match, parseOptions}) => {
 
 const mapStateToProps = (state) => {
     return {
-        message: state.message
+        message: state.message,
+        playerNames: state.game.playerNames,
+        startError: state.game.startError,
+        boardName: state.game.boardName,
+        playerName: state.player.playerName
     }
 }
 
