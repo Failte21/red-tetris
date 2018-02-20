@@ -1,5 +1,8 @@
 import fs  from 'fs'
 import debug from 'debug'
+import { Games, Player, Game } from './models'
+
+import _ from 'lodash'
 
 const logerror = debug('tetris:error')
   , loginfo = debug('tetris:info')
@@ -27,13 +30,34 @@ const initApp = (app, params, cb) => {
   })
 }
 
+const games = new Games()
+
+const events = (socket, action) => {
+  const { type } = action
+  switch (action.type) {
+      case ('SERVER_PING'):
+        return socket.emit('action', {type: 'pong'})
+      case ('SERVER_ADD_PLAYER'):
+        const { boardName, playerName } = action.payload
+        if (!games.getGameByBoardName(boardName)) {
+          games.newGame(boardName, playerName, socket.id)
+          socket.emit('action', {type: 'NEW_GAME', payload: games.getGameByBoardName(boardName)})
+        } else {
+          games.newPlayer(playerName, socket.id)
+          games.addPlayerToGame(playerName, boardName)
+          socket.emit('action', {type: 'JOIN_GAME', payload: games.getGameByBoardName(boardName)})
+        }
+        break;
+      default:
+        return;
+  }
+}
+
 const initEngine = io => {
   io.on('connection', function(socket){
     loginfo("Socket connected: " + socket.id)
     socket.on('action', (action) => {
-      if(action.type === 'SERVER_PING'){
-        socket.emit('action', {type: 'pong'})
-      }
+      events(socket, action)
     })
   })
 }
