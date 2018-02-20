@@ -16,6 +16,7 @@ export class Games {
 
 	newGame = (boardName, playerName) => {
 		if (!this.getPlayerByName(playerName)) throw new Error('player not instantiated')
+		if (this.getGameByBoardName(boardName)) throw new Error('game already instantiated')
 		const gameInstance = new Game(boardName, playerName)
 		this.games.push(gameInstance)
 	}
@@ -27,7 +28,7 @@ export class Games {
 
 	isPlayerInGame = (playerName, boardName) => {
 		const player = this.getPlayerByName(playerName)
-		return player.boardName === boardName
+		return player.currentBoardName === boardName
 	}
 
 	returnPlayerFromGame = (playerName, boardName) => {
@@ -40,10 +41,10 @@ export class Games {
 		if (!this.getGameByBoardName(boardName)) throw new Error('game not instantiated.')
 
 		const gameInstance = this.getGameByBoardName(boardName)
-		if (!this.isPlayerInGame(playerName, boardName)) {
-			this.getPlayerByName(playerName).boardName = boardName
-			gameInstance.addPlayer(playerName)
-		}
+		const player = this.getPlayerByName(playerName)
+
+		player.setCurrentGame(boardName)
+		if (!gameInstance.playerNames.includes(playerName)) gameInstance.addPlayer(playerName)
 	}
 }
 
@@ -53,7 +54,7 @@ class PlayerModel {
 		this.id = _.uniqueId()
 		this.playerName = playerName
 		this.socketId = socketId
-		this.boardName = null
+		this.currentBoardName = null
 		this.isPlaying = false
 	}
 }
@@ -63,18 +64,8 @@ export class Player extends PlayerModel {
 		super(playerName, socketId)
 	}
 
-	addPlayerToRoom = (boardName) => {
-		// this.boardName = boardName
-	}
-
-	startPlaying = () => {
-		// this.isPlaying = true
-	}
-
-	loseGame = () => {
-		// emit some message about losing
-		// this.boardName = null
-		// this.inGame = false
+	setCurrentGame = (boardName) => {
+		this.currentBoardName = boardName
 	}
 }
 
@@ -112,8 +103,9 @@ export class Game extends GameModel {
 
 	}
 
-	addPlayer = (playerName, boardName) => {
+	addPlayer = (playerName) => {
 		if (!this.hasStarted && !this.hasEnded) {
+			if (this.playerNames.includes(playerName)) throw new Error('player already in game.')
 			this.playerNames = [...this.playerNames, playerName]
 		}
 	}

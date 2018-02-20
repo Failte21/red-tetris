@@ -3,7 +3,7 @@ import { JOIN_GAME, NEW_GAME, START_FAILURE, START_SUCCESS } from '../actions/ac
 const defaultState = {
 	boardName: '',
 	leadPlayerName: '',
-	playerNames: '',
+	playerNames: [],
 	pieceLineUp: [],
 	hasStarted: false,
 	hasEnded: false,

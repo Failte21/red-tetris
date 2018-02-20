@@ -4,7 +4,7 @@ const emptyPlayer = {
 	playerName: '',
 	playerId: '',
 	socketId: '',
-	boardName: '',
+	currentBoardName: '',
 	isPlaying: null
 }
 

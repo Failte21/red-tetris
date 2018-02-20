@@ -37,23 +37,26 @@ const events = (socket, action) => {
       case ('SERVER_PING'):
         return socket.emit('action', {type: 'pong'})
       case ('SERVER_ADD_PLAYER'):
+        console.log(`${socket.id}`)
+        console.log(games.players.map(p=>p.playerName))
+        console.log(games.games.map(p=>p.boardName))
         const { boardName, playerName } = action.payload
         const gameCheck = games.getGameByBoardName(boardName)
         const playerCheck = games.getPlayerByName(playerName)
-        if (gameCheck && playerCheck && playerCheck.boardName === boardName)
-          return
+        if (gameCheck && playerCheck && playerCheck.currentBoardName === boardName) {
+	        return
+        }
 
         if (!playerCheck)
           games.newPlayer(playerName, socket.id)
 
         if (!gameCheck) {
           games.newGame(boardName, playerName, socket.id)
-          socket.emit('action', {type: 'NEW_GAME', payload: {game: games.getGameByBoardName(boardName), player: games.getPlayerByName(playerName)}})
+          return socket.emit('action', {type: 'NEW_GAME', payload: {game: games.getGameByBoardName(boardName), player: games.getPlayerByName(playerName)}})
         } else {
           games.addPlayerToGame(playerName, boardName)
-          socket.emit('action', {type: 'JOIN_GAME', payload: {game: games.getGameByBoardName(boardName), player: games.getPlayerByName(playerName)}})
+          return socket.emit('action', {type: 'JOIN_GAME', payload: {game: games.getGameByBoardName(boardName), player: games.getPlayerByName(playerName)}})
         }
-        break;
       default:
         return;
   }
