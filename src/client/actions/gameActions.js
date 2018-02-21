@@ -1,7 +1,6 @@
 import {splitOptions} from "../../common/inputValidation"
 import {SERVER_ADD_PLAYER, START_FAILURE} from './actionTypes'
 
-
 export const parseOptions = options => dispatch => {
     const check = splitOptions(options)
     const { error, playerName, boardName } = check

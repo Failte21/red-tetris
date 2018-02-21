@@ -35,11 +35,6 @@ export class Games {
         return player.currentBoardName === boardName
     }
 
-    returnPlayerFromGame = (playerName, boardName) => {
-        const isInGame = this.isPlayerInGame(playerName, boardName)
-        return isInGame ? this.getPlayerByName(playerName) : null
-    }
-
     addPlayerToGame = (playerName, boardName) => {
         if (!this.getPlayerByName(playerName)) throw new Error('player not instantiated.')
         if (!this.getGameByBoardName(boardName)) throw new Error('game not instantiated.')
