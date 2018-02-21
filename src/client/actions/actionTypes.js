@@ -3,6 +3,9 @@ export const SERVER_ADD_PLAYER = 'SERVER_ADD_PLAYER'
 
 export const ALERT_POP = 'ALERT_POP'
 export const ADD_PLAYER = 'ADD_PLAYER'
+export const REMOVE_PLAYER = 'REMOVE_PLAYER'
+export const SUBSCRIBE_PLAYER = 'SUBSCRIBE_PLAYER'
+
 export const START_FAILURE = 'START_FAILURE'
 export const START_SUCCESS = 'START_SUCCESS'
 
