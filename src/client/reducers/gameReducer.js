@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { JOIN_GAME, NEW_GAME, START_FAILURE, START_SUCCESS, LEAVE_GAME, DELETE_GAME } from '../actions/actionTypes'
 
 const defaultState = {
@@ -15,9 +14,9 @@ const defaultState = {
 const gameReducer = (state = defaultState, action) => {
 	switch (action.type) {
 		case JOIN_GAME:
-			return {...state, ..._.cloneDeep(action.payload.game)}
+			return {...state, ...action.payload.game}
 		case NEW_GAME:
-			return {...state, ..._.cloneDeep(action.payload.game)}
+			return {...state, ...action.payload.game}
 		case START_FAILURE:
 			return {...state, startError: action.payload }
 		case START_SUCCESS:
