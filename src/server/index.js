@@ -3,6 +3,7 @@ import debug from 'debug'
 import { Games, Player, Game } from './models'
 
 import _ from 'lodash'
+import {JOIN_GAME, NEW_GAME} from '../client/actions/actionTypes'
 
 const logerror = debug('tetris:error')
   , loginfo = debug('tetris:info')
@@ -39,9 +40,9 @@ const events = (socket, action) => {
       case ('SERVER_ADD_PLAYER'):
 
         //TODO refactor ugh
-        console.log(`${socket.id}`)
-        console.log(games.players.map(p=>p.playerName))
-        console.log(games.games.map(p=>p.boardName))
+        // console.log(`${socket.id}`)
+        // console.log(games.players.map(p=>p.playerName))
+        // console.log(games.games.map(p=>p.boardName))
         const { boardName, playerName } = action.payload
         const gameCheck = games.getGameByBoardName(boardName)
         const playerCheck = games.getPlayerByName(playerName)
@@ -52,24 +53,31 @@ const events = (socket, action) => {
         if (!playerCheck)
           games.newPlayer(playerName, socket.id)
 
+        socket.join(boardName)
         if (!gameCheck) {
           games.newGame(boardName, playerName, socket.id)
           return socket.emit('action', {
-            type: 'NEW_GAME',
+            type: NEW_GAME,
             payload: {
               game: games.getGameByBoardName(boardName),
               player: games.getPlayerByName(playerName),
-              meta: games.games }})
+              meta: games.games
+            }
+          })
         } else {
           games.addPlayerToGame(playerName, boardName)
 
             //ugh
-          return socket.emit('action', {
-            type: 'JOIN_GAME',
+          const action = {
+            type: JOIN_GAME,
             payload: {
               game: games.getGameByBoardName(boardName),
               player: games.getPlayerByName(playerName),
-              meta: games.games }})
+              meta: games.games
+            }
+          }
+          socket.emit('action', action)
+          return socket.to(boardName).emit('action', action)
         }
       default:
         return;
