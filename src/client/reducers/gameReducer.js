@@ -1,4 +1,7 @@
-import { JOIN_GAME, NEW_GAME, START_FAILURE, START_SUCCESS, LEAVE_GAME, DELETE_GAME } from '../actions/actionTypes'
+import {
+    JOIN_GAME, NEW_GAME, START_FAILURE, START_SUCCESS, LEAVE_GAME, DELETE_GAME,
+    REMOVE_PLAYER
+} from '../actions/actionTypes'
 
 const defaultState = {
 	boardName: '',
@@ -21,6 +24,8 @@ const gameReducer = (state = defaultState, action) => {
 			return {...state, startError: action.payload }
 		case START_SUCCESS:
 			return {...state, startError: '' }
+        case REMOVE_PLAYER:
+            return {...state, playerNames: state.playerNames.filter(playerName => playerName !== action.payload)}
 		default:
 			return state
 	}
