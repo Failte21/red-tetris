@@ -2,42 +2,56 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Board from '../components/board/board'
+import BoardMeta from '../components/boardMeta/boardMeta'
+import GameMeta from '../components/gameMeta/gameMeta'
 import './app.scss'
 import { parseOptions } from '../actions/gameActions'
 
-const App = ({match, parseOptions, boardName, startError, playerName, playerNames}) => {
+const App = ({
+     match,
+     parseOptions,
+     boardName,
+     startError,
+     playerName,
+     playerNames,
+     isPlaying,
+     readyGames,
+     inProgressGames}) => {
 
     parseOptions(match.params.boardOptions)
-    console.log('remaking App component')
 
     return (
         <div className={'tetris'}>
-            {playerName}
+            <GameMeta
+                readyGames={readyGames}
+                inProgressGames={inProgressGames} />
+
             {!startError && <div className={'main'}>
                 <Board size={'large'}/>
+                <BoardMeta boardName={boardName} playerName={playerName} isPlaying={isPlaying} />
             </div>}
-            <div className={'opponents'}>
-                {playerNames.map((o, i) => {
-                    if (o !== playerName)
-                        return (
-                            <div>
-                                <Board key={i} size={'small'}/>
+	        {!startError && <div className={'opponents'}>
+                {playerNames.filter(p=>p !== playerName).map((o, i) => (
+                            <div key={i}>
+                                <Board size={'small'}/>
                                 {o}
                             </div>
-                        )
-                })}
-            </div>
+                ))}
+            </div>}
+            {startError && <div className={'error'}>{startError}</div>}
         </div>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
-        message: state.message,
         playerNames: state.game.playerNames,
         startError: state.game.startError,
         boardName: state.game.boardName,
-        playerName: state.player.playerName
+        playerName: state.player.playerName,
+        isPlaying: state.player.isPlaying,
+        readyGames: state.meta.readyGames,
+        inProgressGames: state.meta.inProgressGames
     }
 }
 

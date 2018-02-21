@@ -1,11 +1,12 @@
-import {JOIN_GAME, NEW_GAME} from '../actions/actionTypes'
+import _ from 'lodash'
+import {JOIN_GAME, NEW_GAME, LEAVE_GAME, DELETE_GAME } from '../actions/actionTypes'
 
 const emptyPlayer = {
 	playerName: '',
 	playerId: '',
 	socketId: '',
 	currentBoardName: '',
-	isPlaying: null
+	isPlaying: false
 }
 
 const playerReducer = (state = emptyPlayer, action) => {

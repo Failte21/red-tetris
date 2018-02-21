@@ -1,5 +1,4 @@
 const socketIoMiddleWare = socket => ({dispatch, getState}) => {
-
 	if(socket) socket.on('action', action => {
 		dispatch(action)
 	})

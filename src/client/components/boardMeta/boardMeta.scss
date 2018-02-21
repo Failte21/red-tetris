@@ -1,0 +1,12 @@
+.playerName {
+  font-family: Monaco, monospace;
+
+  &.activePlayer {
+    color: darkgreen;
+  }
+
+  &.inactivePlayer {
+    color: #777;
+  }
+
+}

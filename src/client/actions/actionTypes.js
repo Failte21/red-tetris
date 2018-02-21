@@ -8,3 +8,5 @@ export const START_SUCCESS = 'START_SUCCESS'
 
 export const JOIN_GAME = 'JOIN_GAME'
 export const NEW_GAME = 'NEW_GAME'
+export const LEAVE_GAME = 'LEAVE_GAME'
+export const DELETE_GAME = 'DELETE_GAME'

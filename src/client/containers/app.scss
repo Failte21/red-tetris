@@ -1,14 +1,17 @@
 .tetris {
-    width: 500px;
+    width: 650px;
     margin: auto;
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
 
     .main {
+      flex-flow: row wrap;
     }
 
     .opponents {
+        flex: initial;
         display: flex;
         flex-direction: column;
     }
