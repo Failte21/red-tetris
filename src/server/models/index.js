@@ -1,51 +1,58 @@
 import _ from 'lodash'
 
 export class Games {
-	constructor(games = [], players = []) {
-		this.games = games
-		this.players = players
-	}
+    constructor(games = [], players = []) {
+        this.games = games
+        this.players = players
+    }
 
-	getGameByBoardName = (boardName) => {
-		return _.find(this.games, {boardName: boardName})
-	}
+    getGameByBoardName = (boardName) => {
+        return _.find(this.games, {boardName: boardName})
+    }
 
-	getPlayerByName = (playerName) => {
-		return _.find(this.players, {playerName: playerName})
-	}
+    getPlayerByName = (playerName) => {
+        return _.find(this.players, {playerName: playerName})
+    }
 
-	newGame = (boardName, playerName) => {
-		if (!this.getPlayerByName(playerName)) throw new Error('player not instantiated')
-		if (this.getGameByBoardName(boardName)) throw new Error('game already instantiated')
-		const gameInstance = new Game(boardName, playerName)
-		this.games.push(gameInstance)
-	}
+    getPlayerBySocketId = (socketId) => {
+        return _.find(this.players, {socketId})
+    }
 
-	newPlayer = (playerName, socketId) => {
-		const player = new Player(playerName, socketId)
-		this.players.push(player)
-	}
+    newGame = (boardName, playerName) => {
+        if (!this.getPlayerByName(playerName)) throw new Error('player not instantiated')
+        if (this.getGameByBoardName(boardName)) throw new Error('game already instantiated')
+        const gameInstance = new Game(boardName, playerName)
+        this.games.push(gameInstance)
+    }
 
-	isPlayerInGame = (playerName, boardName) => {
-		const player = this.getPlayerByName(playerName)
-		return player.currentBoardName === boardName
-	}
+    newPlayer = (playerName, socketId) => {
+        const player = new Player(playerName, socketId)
+        this.players.push(player)
+    }
 
-	returnPlayerFromGame = (playerName, boardName) => {
-		const isInGame = this.isPlayerInGame(playerName, boardName)
-		return isInGame ? this.getPlayerByName(playerName) : null
-	}
+    isPlayerInGame = (playerName, boardName) => {
+        const player = this.getPlayerByName(playerName)
+        return player.currentBoardName === boardName
+    }
 
-	addPlayerToGame = (playerName, boardName) => {
-		if (!this.getPlayerByName(playerName)) throw new Error('player not instantiated.')
-		if (!this.getGameByBoardName(boardName)) throw new Error('game not instantiated.')
+    returnPlayerFromGame = (playerName, boardName) => {
+        const isInGame = this.isPlayerInGame(playerName, boardName)
+        return isInGame ? this.getPlayerByName(playerName) : null
+    }
 
-		const gameInstance = this.getGameByBoardName(boardName)
-		const player = this.getPlayerByName(playerName)
+    addPlayerToGame = (playerName, boardName) => {
+        if (!this.getPlayerByName(playerName)) throw new Error('player not instantiated.')
+        if (!this.getGameByBoardName(boardName)) throw new Error('game not instantiated.')
 
-		player.setCurrentGame(boardName)
-		if (!gameInstance.playerNames.includes(playerName)) gameInstance.addPlayer(playerName)
-	}
+        const gameInstance = this.getGameByBoardName(boardName)
+        const player = this.getPlayerByName(playerName)
+
+        player.setCurrentGame(boardName)
+        if (!gameInstance.playerNames.includes(playerName)) gameInstance.addPlayer(playerName)
+    }
+
+    removePlayer = playerName => this.players = this.players.filter(player => player.playerName !== playerName)
+    removeGame = boardName => this.games = this.games.filter(game => game.boardName !== boardName)
 }
 
 class PlayerModel {
@@ -100,7 +107,6 @@ export class Game extends GameModel {
 	endGame = () => {
 		// this.hasEnded = true
 		// this.winner = _.find(this.players, { 'id' : this.playerIdsInGame[0].id })
-
 	}
 
 	addPlayer = (playerName) => {
@@ -109,6 +115,12 @@ export class Game extends GameModel {
 			this.playerNames = [...this.playerNames, playerName]
 		}
 	}
+
+	removePLayer = playerToRemoveName => {
+        if (!this.hasStarted && !this.hasEnded) {
+            this.playerNames = this.playerNames.filter(playerName => playerName !== playerToRemoveName)
+        }
+    }
 
 	bootPlayer = (playerId) => {
 		//this.playerIdsInGame = this.players.filter(p => p.id !== playerId)

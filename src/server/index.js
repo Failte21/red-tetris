@@ -3,7 +3,7 @@ import debug from 'debug'
 import { Games, Player, Game } from './models'
 
 import _ from 'lodash'
-import {JOIN_GAME, NEW_GAME} from '../client/actions/actionTypes'
+import {JOIN_GAME, NEW_GAME, REMOVE_PLAYER, SUBSCRIBE_PLAYER} from '../client/actions/actionTypes'
 
 const logerror = debug('tetris:error')
     , loginfo = debug('tetris:info')
@@ -25,7 +25,7 @@ const initApp = (app, params, cb) => {
 
     app.on('request', handler)
 
-    app.listen({host, port}, () =>{
+    app.listen({host, port}, () => {
         loginfo(`tetris listen on ${params.url}`)
         cb()
     })
@@ -38,11 +38,6 @@ const events = (socket, action) => {
         case ('SERVER_PING'):
             return socket.emit('action', {type: 'pong'})
         case ('SERVER_ADD_PLAYER'):
-
-            //TODO refactor ugh
-            // console.log(`${socket.id}`)
-            // console.log(games.players.map(p=>p.playerName))
-            // console.log(games.games.map(p=>p.boardName))
             const { boardName, playerName } = action.payload
             const gameCheck = games.getGameByBoardName(boardName)
             const playerCheck = games.getPlayerByName(playerName)
@@ -53,32 +48,54 @@ const events = (socket, action) => {
             if (!playerCheck)
                 games.newPlayer(playerName, socket.id)
 
+            // socket.join(boardName)
+            // if (!gameCheck) {
+            //     games.newGame(boardName, playerName, socket.id)
+            //     return socket.emit('action', {
+            //         type: NEW_GAME,
+            //         payload: {
+            //             game: games.getGameByBoardName(boardName),
+            //             player: games.getPlayerByName(playerName),
+            //             meta: games.games
+            //         }
+            //     })
+            // } else {
+            //     games.addPlayerToGame(playerName, boardName)
+            //
+            //     //ugh
+            //     const action = {
+            //         type: JOIN_GAME,
+            //         payload: {
+            //             game: games.getGameByBoardName(boardName),
+            //             player: games.getPlayerByName(playerName),
+            //             meta: games.games
+            //         }
+            //     }
+            //     socket.emit('action', action)
+            //     return socket.to(boardName).emit('action', action)
+            // }
+
+            const player = games.getPlayerByName(playerName)
             socket.join(boardName)
-            if (!gameCheck) {
+            const type = gameCheck ? JOIN_GAME : NEW_GAME
+            if (type === NEW_GAME) {
                 games.newGame(boardName, playerName, socket.id)
-                return socket.emit('action', {
-                    type: NEW_GAME,
-                    payload: {
-                        game: games.getGameByBoardName(boardName),
-                        player: games.getPlayerByName(playerName),
-                        meta: games.games
-                    }
-                })
             } else {
                 games.addPlayerToGame(playerName, boardName)
-
-                //ugh
-                const action = {
-                    type: JOIN_GAME,
-                    payload: {
-                        game: games.getGameByBoardName(boardName),
-                        player: games.getPlayerByName(playerName),
-                        meta: games.games
-                    }
-                }
-                socket.emit('action', action)
-                return socket.to(boardName).emit('action', action)
             }
+
+            //Todo: rename
+            const action_2 = {
+                type,
+                payload: {
+                    game: games.getGameByBoardName(boardName),
+                    player,
+                    meta: games.games
+                }
+            }
+            socket.emit('action', {type: SUBSCRIBE_PLAYER, payload: player})
+            socket.to(boardName).emit('action', action_2)
+            return socket.emit('action', action_2)
         default:
             return;
     }
@@ -89,6 +106,18 @@ const initEngine = io => {
         loginfo("Socket connected: " + socket.id)
         socket.on('action', (action) => {
             events(socket, action)
+        })
+        socket.on('disconnect', () => {
+            const player = games.getPlayerBySocketId(socket.id)
+            const { currentBoardName, playerName } = player
+            const game = games.getGameByBoardName(currentBoardName)
+            games.removePlayer(playerName)
+            games.removeGame()
+            game.removePLayer(playerName)
+                if (!game.playerNames.length) {
+                    games.removeGame(currentBoardName)
+                        }
+            socket.to(currentBoardName).emit('action', {type: REMOVE_PLAYER,payload: playerName})
         })
     })
 }
