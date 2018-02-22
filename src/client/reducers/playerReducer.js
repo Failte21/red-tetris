@@ -10,7 +10,7 @@ const emptyPlayer = {
 
 const playerReducer = (state = emptyPlayer, action) => {
 	switch (action.type) {
-            case SUBSCRIBE_PLAYER:
+        case SUBSCRIBE_PLAYER:
 			return {...state, ...action.payload }
 		default:
 			return state

@@ -1,5 +1,10 @@
 import _ from 'lodash'
 
+//temp
+import chai from 'chai'
+const assert = chai.assert
+
+
 export class Games {
     constructor(games = [], players = []) {
         this.games = games
@@ -46,7 +51,17 @@ export class Games {
         if (!gameInstance.playerNames.includes(playerName)) gameInstance.addPlayer(playerName)
     }
 
-    removePlayer = playerName => this.players = this.players.filter(player => player.playerName !== playerName)
+    deletePlayer = (playerName) => {
+        this.players = this.players.filter(player => player.playerName !== playerName)
+    }
+
+    disconnectPlayerFromGame = (playerName, boardName) => {
+    	const gameInstance = this.getGameByBoardName(boardName)
+        const player = this.getPlayerByName(playerName)
+	    gameInstance.disconnectPlayer(playerName)
+	    player.setCurrentGame('')
+    }
+
     removeGame = boardName => this.games = this.games.filter(game => game.boardName !== boardName)
 }
 
@@ -66,9 +81,7 @@ export class Player extends PlayerModel {
 		super(playerName, socketId)
 	}
 
-	setCurrentGame = (boardName) => {
-		this.currentBoardName = boardName
-	}
+	setCurrentGame = boardName => this.currentBoardName = boardName
 }
 
 class GameModel {
@@ -79,7 +92,7 @@ class GameModel {
 		this.pieceLineUp = []
 		this.hasStarted = false
 		this.hasEnded = false
-		this.winnerName = null
+		this.winnerName = ''
 		this.startError = null
 	}
 }
@@ -111,15 +124,18 @@ export class Game extends GameModel {
 		}
 	}
 
-	removePLayer = playerToRemoveName => {
-        if (!this.hasStarted && !this.hasEnded) {
-            this.playerNames = this.playerNames.filter(playerName => playerName !== playerToRemoveName)
-        }
+	changeLeader = (playerIndex) => {
+	    this.leadPlayerName = this.playerNames[playerIndex] || ''
     }
 
-	bootPlayer = (playerId) => {
-		//this.playerIdsInGame = this.players.filter(p => p.id !== playerId)
-	}
+	disconnectPlayer = (playerToRemoveName) => {
+		assert(this.playerNames.includes(playerToRemoveName), 'player already removed from game.')
+		if (playerToRemoveName === this.leadPlayerName) {
+            const playerIndex = this.playerNames.indexOf(playerToRemoveName)
+            this.changeLeader(playerIndex)
+        }
+        this.playerNames = this.playerNames.filter(playerName => playerName !== playerToRemoveName)
+    }
 }
 
 class PieceModel {
