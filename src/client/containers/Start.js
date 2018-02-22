@@ -1,8 +1,0 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import Board from '../components/board/board'
-import BoardMeta from '../components/boardMeta/boardMeta'
-import GameMeta from '../components/gameMeta/gameMeta'
-import './app.scss'
-import { parseOptions } from '../actions/gameActions'
