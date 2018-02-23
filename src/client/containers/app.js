@@ -19,7 +19,7 @@ const App = ({
                  playerName}) => {
 
     //todo: move this somewhere else but ugh routing
-    parseOptions(match.params.boardOptions)
+    // parseOptions(match.params.boardOptions)
 
     return (
         <div className={'tetris'}>

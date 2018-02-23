@@ -1,15 +1,14 @@
 import React from 'react'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
-import { Redirect } from 'react-router'
+import { ConnectedRouter } from 'react-router-redux'
 import App from './containers/app'
 
-const AppRouter = () => (
-    <Router>
+const AppRouter = ({history}) => (
+    <ConnectedRouter history={history} >
         <Switch>
-            <Route path={'/:boardOptions'} component={App} />
             <Route component={App} />
         </Switch>
-    </Router>
+    </ConnectedRouter>
 )
 
 export default AppRouter
