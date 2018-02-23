@@ -1,4 +1,6 @@
-import { NEW_GAME, START_FAILURE, START_SUCCESS } from '../actions/actionTypes'
+import {
+    ANNOUNCE_DELETE_IN_PROGRESS_GAME, ANNOUNCE_DELETE_READY_GAME, ANNOUNCE_NEW_GAME
+} from '../actions/actionTypes'
 
 const defaultState = {
 	inProgressGames: [],
@@ -7,12 +9,12 @@ const defaultState = {
 
 const metaReducer = (state = defaultState, action) => {
     switch (action.type) {
-	    case NEW_GAME:
-	    	return {...state, readyGames: [...state.readyGames, ...action.payload.game.boardName]}
-        case START_FAILURE:
-            return {...state, startError: true }
-        case START_SUCCESS:
-            return {...state, startError: false }
+	    case ANNOUNCE_NEW_GAME:
+	    	return {...state, readyGames: [...state.readyGames, ...action.payload.roomName]}
+        case ANNOUNCE_DELETE_IN_PROGRESS_GAME:
+            return {...state, inProgressGames: state.inProgressGames.filter(g => g !== action.payload.roomName)}
+        case ANNOUNCE_DELETE_READY_GAME:
+            return {...state, readyGames: state.readyGames.filter(g => g !== action.payload.roomName)}
         default:
             return state
     }

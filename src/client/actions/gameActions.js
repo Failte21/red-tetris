@@ -1,9 +1,10 @@
-import {splitOptions} from "../../common/inputValidation"
-import {SERVER_ADD_PLAYER, START_FAILURE} from './actionTypes'
+import {checkValidHashURL} from "../../common/inputValidation"
+import {START_FAILURE} from './actionTypes'
+import {onPlayerEnterRoom} from "./server"
 
 export const parseOptions = options => dispatch => {
-    const check = splitOptions(options)
-    const { error, playerName, boardName } = check
+    const checkValidParams = checkValidHashURL(options)
+    const { error, playerName, roomName } = checkValidParams
     if (error) return dispatch({type: START_FAILURE, payload: error })
-    return dispatch ({type: SERVER_ADD_PLAYER, payload: {playerName, boardName}})
+    return dispatch(onPlayerEnterRoom(playerName, roomName))
 }

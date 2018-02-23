@@ -4,7 +4,7 @@ import {
 } from '../actions/actionTypes'
 
 const defaultState = {
-	boardName: '',
+	roomName: '',
 	leadPlayerName: '',
 	playerNames: [],
 	pieceLineUp: [],

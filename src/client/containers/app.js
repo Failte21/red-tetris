@@ -10,7 +10,7 @@ import { parseOptions } from '../actions/gameActions'
 const App = ({
      match,
      parseOptions,
-     boardName,
+     roomName,
      startError,
      playerName,
      playerNames,
@@ -28,7 +28,7 @@ const App = ({
 
             {!startError && <div className={'main'}>
                 <Board size={'large'}/>
-                <BoardMeta boardName={boardName} playerName={playerName} isPlaying={isPlaying} />
+                <BoardMeta roomName={roomName} playerName={playerName} isPlaying={isPlaying} />
             </div>}
 	        {!startError && <div className={'opponents'}>
                 {playerNames.filter(p=>p !== playerName).map((o, i) => (
@@ -47,7 +47,7 @@ const mapStateToProps = (state) => {
     return {
         playerNames: state.game.playerNames,
         startError: state.game.startError,
-        boardName: state.game.boardName,
+        roomName: state.game.roomName,
         playerName: state.player.playerName,
         isPlaying: state.player.isPlaying,
         readyGames: state.meta.readyGames,

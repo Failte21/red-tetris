@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-//temp
+// temp
 import chai from 'chai'
 const assert = chai.assert
 
@@ -11,8 +11,8 @@ export class Games {
         this.players = players
     }
 
-    getGameByBoardName = (boardName) => {
-        return _.find(this.games, {boardName: boardName})
+    getGameByRoomName = (roomName) => {
+        return _.find(this.games, {roomName: roomName})
     }
 
     getPlayerByName = (playerName) => {
@@ -23,10 +23,10 @@ export class Games {
         return _.find(this.players, {socketId})
     }
 
-    newGame = (boardName, playerName) => {
+    newGame = (roomName, playerName) => {
         if (!this.getPlayerByName(playerName)) throw new Error('player not instantiated')
-        if (this.getGameByBoardName(boardName)) throw new Error('game already instantiated')
-        const gameInstance = new Game(boardName, playerName)
+        if (this.getGameByRoomName(roomName)) throw new Error('game already instantiated')
+        const gameInstance = new Game(roomName, playerName)
         this.games.push(gameInstance)
     }
 
@@ -35,19 +35,19 @@ export class Games {
         this.players.push(player)
     }
 
-    isPlayerInGame = (playerName, boardName) => {
+    isPlayerInGame = (playerName, roomName) => {
         const player = this.getPlayerByName(playerName)
-        return player.currentBoardName === boardName
+        return player.currentRoomName === roomName
     }
 
-    addPlayerToGame = (playerName, boardName) => {
+    addPlayerToGame = (playerName, roomName) => {
         if (!this.getPlayerByName(playerName)) throw new Error('player not instantiated.')
-        if (!this.getGameByBoardName(boardName)) throw new Error('game not instantiated.')
+        if (!this.getGameByRoomName(roomName)) throw new Error('game not instantiated.')
 
-        const gameInstance = this.getGameByBoardName(boardName)
+        const gameInstance = this.getGameByRoomName(roomName)
         const player = this.getPlayerByName(playerName)
 
-        player.setCurrentGame(boardName)
+        player.setCurrentGame(roomName)
         if (!gameInstance.playerNames.includes(playerName)) gameInstance.addPlayer(playerName)
     }
 
@@ -55,14 +55,14 @@ export class Games {
         this.players = this.players.filter(player => player.playerName !== playerName)
     }
 
-    disconnectPlayerFromGame = (playerName, boardName) => {
-    	const gameInstance = this.getGameByBoardName(boardName)
+    disconnectPlayerFromGame = (playerName, roomName) => {
+    	const gameInstance = this.getGameByRoomName(roomName)
         const player = this.getPlayerByName(playerName)
 	    gameInstance.disconnectPlayer(playerName)
 	    player.setCurrentGame('')
     }
 
-    removeGame = boardName => this.games = this.games.filter(game => game.boardName !== boardName)
+    removeGame = roomName => this.games = this.games.filter(game => game.roomName !== roomName)
 }
 
 class PlayerModel {
@@ -71,7 +71,7 @@ class PlayerModel {
 		this.id = _.uniqueId()
 		this.playerName = playerName
 		this.socketId = socketId
-		this.currentBoardName = null
+		this.currentRoomName = null
 		this.isPlaying = false
 	}
 }
@@ -81,12 +81,12 @@ export class Player extends PlayerModel {
 		super(playerName, socketId)
 	}
 
-	setCurrentGame = boardName => this.currentBoardName = boardName
+	setCurrentGame = roomName => this.currentRoomName = roomName
 }
 
 class GameModel {
-	constructor(boardName = null, leadPlayerName) {
-		this.boardName = boardName
+	constructor(roomName = null, leadPlayerName) {
+		this.roomName = roomName
 		this.leadPlayerName = leadPlayerName //player who inits game
 		this.playerNames = [leadPlayerName]
 		this.pieceLineUp = []
@@ -98,8 +98,8 @@ class GameModel {
 }
 
 export class Game extends GameModel {
-	constructor(boardName, leadPlayerName) {
-		super(boardName, leadPlayerName)
+	constructor(roomName, leadPlayerName) {
+		super(roomName, leadPlayerName)
 	}
 
 	generatePieceList = () => {

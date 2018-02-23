@@ -6,4 +6,3 @@ export const alert = message => {
     payload: message
   }
 }
-
