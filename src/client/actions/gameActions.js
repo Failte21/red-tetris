@@ -1,6 +1,7 @@
 import {checkValidHashURL} from "../../common/inputValidation"
 import {START_FAILURE} from './actionTypes'
 import {nuclearOption, onPlayerEnterRoom} from "./server"
+import { push } from 'react-router-redux'
 
 export const parseOptions = options => dispatch => {
     console.log('called parseOptions with ', options)
@@ -12,5 +13,6 @@ export const parseOptions = options => dispatch => {
 
 export const redButton = () => dispatch => {
     console.log('nuclear option')
-    return dispatch(nuclearOption())
+    dispatch(nuclearOption())
+    return dispatch(push('/'))
 }
