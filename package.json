@@ -43,6 +43,7 @@
     "eslint-plugin-node": "^6.0.0",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1",
+    "history": "^4.7.2",
     "mocha": "^2.4.5",
     "nyc": "^6.4.4",
     "react-router": "^4.2.0",

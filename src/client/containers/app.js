@@ -6,38 +6,29 @@ import BoardMeta from '../components/boardMeta/boardMeta'
 import GameMeta from '../components/gameMeta/gameMeta'
 import './app.scss'
 import { parseOptions } from '../actions/gameActions'
+import Game from "./Game"
 
 const App = ({
-     match,
-     parseOptions,
-     roomName,
-     startError,
-     playerName,
-     playerNames,
-     isPlaying,
-     readyGames,
-     inProgressGames}) => {
+                 match,
+                 parseOptions,
+                 roomName,
+                 startError,
+                readyGames,
+                inProgressGames,
+                 playerName}) => {
 
+    //todo: move this somewhere else but ugh routing
     parseOptions(match.params.boardOptions)
 
     return (
         <div className={'tetris'}>
+            {playerName}
             <GameMeta
                 readyGames={readyGames}
                 inProgressGames={inProgressGames} />
 
-            {!startError && <div className={'main'}>
-                <Board size={'large'}/>
-                <BoardMeta roomName={roomName} playerName={playerName} isPlaying={isPlaying} />
-            </div>}
-	        {!startError && <div className={'opponents'}>
-                {playerNames.filter(p=>p !== playerName).map((o, i) => (
-                            <div key={i}>
-                                <Board size={'small'}/>
-                                {o}
-                            </div>
-                ))}
-            </div>}
+            {!startError && <Game playerName={playerName} roomName={roomName} />}
+
             {startError && <div className={'error'}>{startError}</div>}
         </div>
     )

@@ -12,7 +12,7 @@ const logerror = debug('tetris:error')
 const games = new Games()
 
 const removePlayerFromRoom = (payload, socket, io) => {
-    console.log('Removing player from room')
+    console.log('Removing player from room', payload.roomName)
     const { playerName, roomName } = payload
     const player = games.getPlayerByName(playerName)
     const prevRoomName = player.currentRoomName || ''
