@@ -14,7 +14,6 @@ import AppRouter from './appRouter'
 import params from "../../params"
 
 const initialState = {}
-
 const socket = io(params.server.url)
 
 const store = createStore(

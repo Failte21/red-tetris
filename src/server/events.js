@@ -1,7 +1,8 @@
 import assert from "assert"
 import debug from 'debug'
 import {
-    ANNOUNCE_DELETE_IN_PROGRESS_GAME, ANNOUNCE_DELETE_READY_GAME, ANNOUNCE_NEW_GAME, JOIN_GAME, NEW_GAME, REMOVE_PLAYER,
+    ANNOUNCE_DELETE_IN_PROGRESS_GAME, ANNOUNCE_DELETE_READY_GAME, ANNOUNCE_NEW_GAME, DELETE_ALL, JOIN_GAME, NEW_GAME,
+    REMOVE_PLAYER,
     SUBSCRIBE_PLAYER
 } from "../client/actions/actionTypes"
 import {Games} from "./models"
@@ -82,12 +83,21 @@ const deletePlayer = (socket, io) => {
     games.deletePlayer(playerName)
 }
 
+const deleteAll = (io) => {
+    const emptyGames = new Games()
+    games.games = {...emptyGames.games}
+    games.players = {...emptyGames.players}
+    io.emit('action', {type: DELETE_ALL })
+
+}
+
 export const initEngine = io => {
     io.on('connection', function (socket) {
         loginfo("Socket connected: " + socket.id)
         socket.on('SERVER_PING', () => (socket.emit('action', {type: 'pong'})))
         socket.on('SERVER_ADD_PLAYER', (payload) => onPlayerEnterRoom(payload, socket, io))
         socket.on('SERVER_REMOVE_PLAYER', (payload) => removePlayerFromRoom(payload, socket, io))
+        socket.on('SERVER_NUCLEAR_OPTION', () => deleteAll(io))
         socket.on('subscribe', (payload) => socket.join(payload.room))
         socket.on('disconnect', () => deletePlayer(socket, io))
     })

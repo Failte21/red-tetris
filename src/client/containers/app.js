@@ -5,12 +5,13 @@ import Board from '../components/board/board'
 import BoardMeta from '../components/boardMeta/boardMeta'
 import GameMeta from '../components/gameMeta/gameMeta'
 import './app.scss'
-import { parseOptions } from '../actions/gameActions'
+import {parseOptions, redButton} from '../actions/gameActions'
 import Game from "./Game"
 
 const App = ({
                  match,
                  parseOptions,
+                redButton,
                  roomName,
                  startError,
                 readyGames,
@@ -23,6 +24,7 @@ const App = ({
     return (
         <div className={'tetris'}>
             {playerName}
+            <button onClick={redButton}>CLEAR ALL</button>
             <GameMeta
                 readyGames={readyGames}
                 inProgressGames={inProgressGames} />
@@ -47,7 +49,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({parseOptions}, dispatch)
+    return bindActionCreators({parseOptions, redButton}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -31,6 +31,7 @@ export class Games {
     }
 
     newPlayer = (playerName, socketId) => {
+        assert(playerName && socketId, 'playerName or socketId should exist.')
         const player = new Player(playerName, socketId)
         this.players.push(player)
     }

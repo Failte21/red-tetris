@@ -1,6 +1,6 @@
 import {
     JOIN_GAME, NEW_GAME, START_FAILURE, START_SUCCESS, LEAVE_GAME, DELETE_GAME,
-    REMOVE_PLAYER
+    REMOVE_PLAYER, DELETE_ALL
 } from '../actions/actionTypes'
 
 const defaultState = {
@@ -26,6 +26,8 @@ const gameReducer = (state = defaultState, action) => {
 			return {...state, startError: '' }
         case REMOVE_PLAYER:
             return {...state, playerNames: state.playerNames.filter(playerName => playerName !== action.payload)}
+		case DELETE_ALL:
+			return {...state, ...defaultState}
 		default:
 			return state
 	}
