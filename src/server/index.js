@@ -1,12 +1,9 @@
 import debug from 'debug'
 import fs from 'fs'
 import {initEngine} from "./events"
-import {Games} from "./models"
 
 const logerror = debug('tetris:error')
     , loginfo = debug('tetris:info')
-
-const appData = new Games()
 
 const initApp = (app, params, cb) => {
     const {host, port} = params
@@ -44,7 +41,7 @@ export function create(params){
                 cb()
             }
 
-            initEngine(io, appData)
+            initEngine(io)
             resolve({stop})
         })
     })
