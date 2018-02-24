@@ -1,4 +1,4 @@
-import {ERROR, JOIN_GAME, UPDATE_GAME} from '../../client/actions/actionTypes'
+import {ERROR, JOIN_GAME, START_SUCCESS, UPDATE_GAME} from '../../client/actions/actionTypes'
 import {EXISTING_USERNAME, GENERIC_ERROR} from '../../common/errors'
 import {Player} from '../models/player'
 import {Game} from '../models/game'

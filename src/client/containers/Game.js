@@ -11,14 +11,14 @@ const GameRoom = ({roomName,
                  playerName,
                  playerNames,
                  isPlaying,
+                leadPlayerName,
                 hasStarted }) => {
 
     return (
         <div className={'tetris'}>
             <div className={'main'}>
-                Game has started: {hasStarted}
                 <Board size={'large'}/>
-                <BoardMeta roomName={roomName} playerName={playerName} isPlaying={isPlaying} />
+                <BoardMeta roomName={roomName} playerName={playerName} isPlaying={isPlaying} hasStarted={hasStarted} leadPlayerName={leadPlayerName} />
             </div>
             <div className={'opponents'}>
                 {playerNames.filter(p=>p !== playerName).map((o, i) => (
@@ -36,12 +36,13 @@ const mapStateToProps = (state) => {
     return {
         playerNames: state.game.playerNames,
         isPlaying: state.player.isPlaying,
-        hasStarted: state.game.hasStarted
+        hasStarted: state.game.hasStarted,
+        leadPlayerName: state.game.leadPlayerName
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({parseOptions}, dispatch)
+    return bindActionCreators({}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameRoom)

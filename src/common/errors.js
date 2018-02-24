@@ -3,3 +3,4 @@ export const INVALID_ROOM_NAME = 'Invalid room name (must be 2-8 alphanumeric ch
 export const INVALID_URL_PARAMS = 'Invalid URL parameters. Must match format #username[roomname].'
 export const EXISTING_USERNAME = 'This username already exists'
 export const GENERIC_ERROR = 'An error occurred'
+export const EXISTING_ROOMNAME = 'This room name is already taken'

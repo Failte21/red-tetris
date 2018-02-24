@@ -1,11 +1,11 @@
-.playerName {
+.boardMetaText {
   font-family: Monaco, monospace;
 
-  &.activePlayer {
+  &.active {
     color: darkgreen;
   }
 
-  &.inactivePlayer {
+  &.inactive {
     color: #777;
   }
 
