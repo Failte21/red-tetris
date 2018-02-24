@@ -4,11 +4,14 @@ const isValidName = (string) => {
     return string.match(/^\w{2,8}$/)
 }
 
+// Expects options to be string in format 42[lsimon] (no leading hash or slash)
 export const checkValidHashURL = (options) => {
+    console.log('options:', options)
     if (!options) return ({error: INVALID_URL_PARAMS, playerName: null, roomName: null})
-    const splitOptions = options.slice(1).split(/\[|]/)
+    const splitOptions = options.split(/\[|]/)
     const [roomName, playerName] = splitOptions
+    console.log('splitOptions:', splitOptions)
     if (!roomName || !isValidName(roomName)) return ({error: INVALID_ROOM_NAME, playerName: null, roomName: null})
     if (!playerName || !isValidName(playerName)) return ({error: INVALID_PLAYER_NAME, playerName: null, roomName: null})
-    return ({error: null, playerName, roomName})
+    else return ({error: null, playerName, roomName})
 }

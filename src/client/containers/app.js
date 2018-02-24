@@ -9,47 +9,33 @@ import {parseOptions, redButton} from '../actions/gameActions'
 import Game from "./Game"
 
 const App = ({
-                 match,
-                 parseOptions,
-                redButton,
                  roomName,
                  startError,
-                readyGames,
-                inProgressGames,
+                userMessage,
                  playerName}) => {
-
-    //todo: move this somewhere else but ugh routing
-    // parseOptions(match.params.boardOptions)
 
     return (
         <div className={'tetris'}>
-            {playerName}
-            <button onClick={redButton}>CLEAR ALL</button>
-            <GameMeta
-                readyGames={readyGames}
-                inProgressGames={inProgressGames} />
 
-            {!startError && <Game playerName={playerName} roomName={roomName} />}
-
+            {(!startError && roomName) && <Game playerName={playerName} roomName={roomName} />}
             {startError && <div className={'error'}>{startError}</div>}
+            {userMessage && <div>{userMessage}</div>}
+
         </div>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
-        playerNames: state.game.playerNames,
-        startError: state.game.startError,
+        startError: state.meta.startError,
+        userMessage: state.meta.userMessage,
         roomName: state.game.roomName,
-        playerName: state.player.playerName,
-        isPlaying: state.player.isPlaying,
-        readyGames: state.meta.readyGames,
-        inProgressGames: state.meta.inProgressGames
+        playerName: state.player.playerName
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return bindActionCreators({parseOptions, redButton}, dispatch)
+    return bindActionCreators({}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
