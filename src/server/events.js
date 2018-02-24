@@ -5,7 +5,6 @@ import {
     REMOVE_PLAYER, SERVER_ADD_PLAYER, SERVER_REMOVE_PLAYER,
     SUBSCRIBE_PLAYER
 } from '../client/actions/actionTypes'
-import {Games} from "./models"
 import * as gamesController from './controllers/gamesController';
 
 const logerror = debug('tetris:error')
