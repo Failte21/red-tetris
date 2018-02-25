@@ -24,7 +24,7 @@ const socket = io(params.server.url)
 const store = createStore(
   reducer,
   initialState,
-  applyMiddleware(thunk, createLogger(), routerMiddleware(history), socketIoMiddleWare(socket))
+  applyMiddleware(thunk, createLogger(), socketIoMiddleWare(socket), routerMiddleware(history))
 )
 
 ReactDom.render((
@@ -33,4 +33,4 @@ ReactDom.render((
   </Provider>
 ), document.getElementById('tetris'))
 
-store.dispatch(alert('Soon, will be here a fantastic Tetris ...'))
+// store.dispatch(alert('Soon, will be here a fantastic Tetris ...'))
