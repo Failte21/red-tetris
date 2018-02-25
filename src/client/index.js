@@ -16,6 +16,7 @@ import params from "../../params"
 import { routerMiddleware, push } from 'react-router-redux'
 // Create a history of your choosing (we're using a browser history in this case)
 import createHistory from 'history/createBrowserHistory'
+import errorHandlerMiddleware from './middleware/errorHandlerMiddleware'
 
 const history = createHistory()
 const initialState = {}
@@ -24,7 +25,7 @@ const socket = io(params.server.url)
 const store = createStore(
   reducer,
   initialState,
-  applyMiddleware(thunk, createLogger(), socketIoMiddleWare(socket), routerMiddleware(history))
+  applyMiddleware(thunk, createLogger(), socketIoMiddleWare(socket), routerMiddleware(history), errorHandlerMiddleware)
 )
 
 ReactDom.render((
