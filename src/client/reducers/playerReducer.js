@@ -9,7 +9,7 @@ const emptyPlayer = {
 
 const playerReducer = (state = emptyPlayer, action) => {
 	switch (action.type) {
-        case JOIN_GAME_SUCCESS:
+        case JOIN_GAME:
             return action.payload.player
         case UPDATE_GAME:
             return {...state, currentRoomname: action.payload.game.roomName}
