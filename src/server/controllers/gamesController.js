@@ -11,7 +11,7 @@ const getBySocketId = socketId => games.find(game => !!game.getPlayerBySocketId(
 
 const create = (roomName, playerName, socket) => {
     const player = new Player(playerName, socket.id)
-    if (!player) return socket.emit('action', {type: ERROR, payload: GENERIC_ERROR})
+    if (!player) return socket.emit('action', {type: ERROR, payload: {error: GENERIC_ERROR, redirect: 'back'}})
     const game = new Game(roomName, player)
     games.push(game)
     socket.join(roomName)
@@ -19,9 +19,9 @@ const create = (roomName, playerName, socket) => {
 }
 
 const join = (game, playerName, socket) => {
-    if (game.hasPlayer(playerName)) return socket.emit('action', {type: ERROR, payload: EXISTING_USERNAME})
+    if (game.hasPlayer(playerName)) return socket.emit('action', {type: ERROR, payload: {error: EXISTING_USERNAME, redirect: 'back'}})
     const player = new Player(playerName, socket.id)
-    if (!player) return socket.emit('action', {type: ERROR, payload: GENERIC_ERROR})
+    if (!player) return socket.emit('action', {type: ERROR, payload: {error: GENERIC_ERROR, redirect: 'back'}})
     game.addPlayer(player)
     socket.join(game.roomName)
     socket.to(game.roomName).emit('action', {type: UPDATE_GAME, payload: game})

@@ -1,5 +1,5 @@
-import {SUBSCRIBE_PLAYER} from "../actions/actionTypes"
-import {parseRoute} from "../actions/gameActions"
+import {ERROR, SUBSCRIBE_PLAYER} from "../actions/actionTypes"
+import {goBackWithError, parseRoute} from "../actions/gameActions"
 
 const socketIoMiddleWare = socket => ({dispatch, getState}) => {
 	if(socket) {
@@ -7,8 +7,13 @@ const socketIoMiddleWare = socket => ({dispatch, getState}) => {
     }
 	return next => action => {
 		if (socket && action.type === '@@router/LOCATION_CHANGE') {
-		    return dispatch(parseRoute(action.payload))
+		    // TODO: Find out why location in store not keeping up
+		    dispatch(parseRoute(action.payload))
 		}
+		if (socket && action.type === ERROR && action.payload.redirect) {
+		    console.log("action.payload", action.payload)
+            return dispatch(goBackWithError(action.payload))
+        }
 		if(socket && action.type && action.type === SUBSCRIBE_PLAYER )
 			socket.emit('subscribe', {room: action.payload.currentRoomName })
 		if(socket && action.type && action.type.indexOf('SERVER_') === 0)

@@ -1,14 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import Board from '../components/board/board'
-import BoardMeta from '../components/boardMeta/boardMeta'
-import GameMeta from '../components/gameMeta/gameMeta'
 import './app.scss'
-import {parseOptions, redButton} from '../actions/gameActions'
 import Game from "./Game"
 
 const App = ({
+                location,
                  roomName,
                  startError,
                 userMessage,
@@ -16,6 +13,7 @@ const App = ({
 
     return (
         <div className={'tetris'}>
+            Location: {location.hash}
 
             {(!startError && roomName) && <Game playerName={playerName} roomName={roomName} />}
             {startError && <div className={'error'}>{startError}</div>}
@@ -30,7 +28,8 @@ const mapStateToProps = (state) => {
         startError: state.meta.startError,
         userMessage: state.meta.userMessage,
         roomName: state.game.roomName,
-        playerName: state.player.playerName
+        playerName: state.player.playerName,
+        location: state.router.location
     }
 }
 

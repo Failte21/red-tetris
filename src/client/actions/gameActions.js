@@ -1,7 +1,7 @@
 import {checkValidHashURL} from "../../common/inputValidation"
 import {NOGAME_MESSAGE, START_FAILURE} from './actionTypes'
 import {onPlayerEnterRoom} from "./server"
-import { push } from 'react-router-redux'
+import { goBack, push } from 'react-router-redux'
 
 
 export const messageNotInGame = (message) => {
@@ -24,6 +24,11 @@ export const startFailure = (errorMessage) => dispatch => {
     return
 }
 
+export const goBackWithError = (error) => dispatch => {
+    dispatch(goBack())
+    dispatch(messageNotInGame(error.error))
+    return
+}
 
 export const parseRoute = location => dispatch => {
     const noHash = !location.hash || location.hash.length === 1
@@ -32,6 +37,6 @@ export const parseRoute = location => dispatch => {
 
     const formattedHash = location.hash.slice(1)
     const hashCheck = checkValidHashURL(formattedHash)
-    if (hashCheck.error) return dispatch(startFailure(hashCheck.error))
-    else return dispatch(onPlayerEnterRoom(hashCheck.playerName, hashCheck.roomName))
+    if (hashCheck.error) dispatch(startFailure(hashCheck.error))
+    else dispatch(onPlayerEnterRoom(hashCheck.playerName, hashCheck.roomName))
 }
