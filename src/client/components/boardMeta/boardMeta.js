@@ -9,6 +9,7 @@ const BoardMeta = ({roomName, playerName, isPlaying, hasStarted, leadPlayerName}
                 <span>&nbsp;(leader{(playerName !== leadPlayerName) && `: ${leadPlayerName}`})</span>
                 </h4>
 			<h4 className={"boardMetaText " + (hasStarted ? 'active' : 'inactive')}>Game has {hasStarted ? '' : 'not'} started.</h4>
+            {playerName === leadPlayerName && <button>START GAME</button>}
 		</div>
 	)
 }

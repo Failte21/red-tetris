@@ -1,8 +1,7 @@
-import {JOIN_GAME, SUBSCRIBE_PLAYER} from '../actions/actionTypes'
+import {JOIN_GAME, SUBSCRIBE_PLAYER, UPDATE_GAME} from '../actions/actionTypes'
 
 const emptyPlayer = {
 	playerName: '',
-	playerId: '',
 	socketId: '',
 	currentRoomName: '',
 	isPlaying: false
@@ -10,10 +9,10 @@ const emptyPlayer = {
 
 const playerReducer = (state = emptyPlayer, action) => {
 	switch (action.type) {
-        case SUBSCRIBE_PLAYER:
-			return {...state, ...action.payload }
-        case JOIN_GAME:
+        case JOIN_GAME_SUCCESS:
             return action.payload.player
+        case UPDATE_GAME:
+            return {...state, currentRoomname: action.payload.game.roomName}
 		default:
 			return state
 	}

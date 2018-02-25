@@ -2,6 +2,9 @@ import {ERROR, JOIN_GAME, UPDATE_GAME} from '../../client/actions/actionTypes'
 import {CANNOT_CHANGE_PLAYERNAME_IN_GAME, EXISTING_USERNAME, GENERIC_ERROR} from '../../common/errors'
 import {Player} from '../models/player'
 import {Game} from '../models/game'
+import _ from 'lodash'
+
+import assert from 'assert'
 
 const games = []
 
@@ -11,11 +14,8 @@ const getBySocketId = socketId => games.find(game => !!game.getPlayerBySocketId(
 
 export const joinOrCreate = (socket, io) => ({roomName, playerName}) => {
     const game = get('roomName', roomName)
-
-    // disconnect user from previous games
-    if (getBySocketId(socket.id)) console.log("player was previously in room: ", getBySocketId(socket.id).roomName)
-    if (getBySocketId(socket.id)) disconnect(socket, io)()
-
+    while (getBySocketId(socket.id)) disconnect(socket, io)()
+    assert(!getBySocketId(socket.id), 'player with this socketid already has game')
     if (!game) return create(roomName, playerName, socket)
     return join(game, playerName, socket)
 }
@@ -31,7 +31,6 @@ const create = (roomName, playerName, socket) => {
 
 const join = (game, playerName, socket) => {
     if (game.hasPlayer(playerName)) return socket.emit('action', {type: ERROR, payload: {error: EXISTING_USERNAME, redirect: 'back'}})
-    // if (getBySocketId(socket.id)) return socket.emit('action', {type: ERROR, payload: {error: CANNOT_CHANGE_PLAYERNAME_IN_GAME, redirect: 'back'}})
     const player = new Player(playerName, socket.id)
     if (!player) return socket.emit('action', {type: ERROR, payload: {error: GENERIC_ERROR, redirect: 'back'}})
     game.addPlayer(player)
@@ -48,8 +47,11 @@ export const disconnect = (socket, io) => () => {
     const player = game.getPlayerBySocketId(socket.id)
     if (!player) return//Todo: do we need to return anything ?
     console.log(`disconnecting player ${player.playerName} from ${game.roomName}`)
+
     game.disconnectPlayer(player.playerName)
-    if (game.playerNames.length && game.leadPlayerName === player.playerName)
+
+    if (game.leadPlayerName === player.playerName)
         game.changeLeader(0)
+    if (!game.playerNames.length) _.remove(games, {roomName: game.roomName})
     io.in(game.roomName).emit('action', {type: UPDATE_GAME, payload: game})
 }

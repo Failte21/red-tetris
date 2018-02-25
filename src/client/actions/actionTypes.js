@@ -13,6 +13,8 @@ export const NOGAME_MESSAGE = 'NOGAME_MESSAGE' // for messages to users who are 
 export const INGAME_MESSAGE = 'INGAME_MESSAGE'
 export const START_FAILURE = 'START_FAILURE'
 export const START_SUCCESS = 'START_SUCCESS' // new game established successfully
+export const JOIN_GAME_SUCCESS = 'JOIN_GAME_SUCCESS'
+export const JOIN_GAME_FAILURE = 'JOIN_GAME_FAILURE'
 
 export const JOIN_GAME = 'JOIN_GAME'
 export const NEW_GAME = 'NEW_GAME'
