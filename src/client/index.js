@@ -14,7 +14,6 @@ import AppRouter from './appRouter'
 import params from "../../params"
 
 import { routerMiddleware } from 'react-router-redux'
-// Create a history of your choosing (we're using a browser history in this case)
 import createHistory from 'history/createBrowserHistory'
 
 const history = createHistory()

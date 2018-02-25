@@ -5,31 +5,30 @@ import './app.scss'
 import Game from "./Game"
 
 const App = ({
-                location,
+                 hash,
                  roomName,
-                 startError,
-                userMessage,
+                 errorMessage,
+                 userMessage,
                  playerName}) => {
 
     return (
         <div className={'tetris'}>
-            Location: {location.hash}
+            Location: {hash}
+            ERROR: {errorMessage ? errorMessage : 'none'}
+            MESSAGE: {userMessage ? userMessage : 'none'}
 
-            {(!startError && roomName) && <Game playerName={playerName} roomName={roomName} />}
-            {startError && <div className={'error'}>{startError}</div>}
-            {userMessage && <div>{userMessage}</div>}
-
+            {(playerName && roomName) && <Game playerName={playerName} roomName={roomName} />}
         </div>
     )
 }
 
 const mapStateToProps = (state) => {
     return {
-        startError: state.meta.startError,
+        errorMessage: state.meta.errorMessage,
         userMessage: state.meta.userMessage,
         roomName: state.game.roomName,
         playerName: state.player.playerName,
-        location: state.router.location
+        hash: state.router.location.hash
     }
 }
 

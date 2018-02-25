@@ -1,39 +1,37 @@
 import {checkValidHashURL} from "../../common/inputValidation"
-import {NOGAME_MESSAGE, START_FAILURE} from './actionTypes'
+import {ERROR_MESSAGE, NOGAME_MESSAGE, START_FAILURE, USER_MESSAGE} from './actionTypes'
 import {onPlayerEnterRoom} from "./server"
 import { goBack, push } from 'react-router-redux'
+import {welcome} from "../../common/messages";
 
-
-export const messageNotInGame = (message) => {
+export const showErrorMessage = (message) => {
     return ({
-        type: NOGAME_MESSAGE,
+        type: ERROR_MESSAGE,
         payload: message
     })
 }
 
-export const startError = () => {
+export const showUserMessage = (message) => {
     return ({
-        type: START_FAILURE
+        type: USER_MESSAGE,
+        payload: message
     })
 }
 
 export const startFailure = (errorMessage) => dispatch => {
-    dispatch(push('/'))
-    dispatch(startError(errorMessage))
-    dispatch(messageNotInGame(errorMessage))
-    return
+    dispatch(goBack())
+    return dispatch({type: START_FAILURE, payload: errorMessage})
 }
 
 export const goBackWithError = (error) => dispatch => {
     dispatch(goBack())
-    dispatch(messageNotInGame(error.error))
-    return
+    return dispatch(showErrorMessage(error))
 }
 
 export const parseRoute = location => dispatch => {
     const noHash = !location.hash || location.hash.length === 1
 
-    if (noHash) return dispatch(messageNotInGame('WELCOME TO RT / PLEASE ENTER ROOMNAME AND USERNAME INTO URL BAR'))
+    if (noHash) return dispatch(showUserMessage(welcome))
 
     const formattedHash = location.hash.slice(1)
     const hashCheck = checkValidHashURL(formattedHash)

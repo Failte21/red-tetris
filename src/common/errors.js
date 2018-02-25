@@ -4,3 +4,4 @@ export const INVALID_URL_PARAMS = 'Invalid URL parameters. Must match format #us
 export const EXISTING_USERNAME = 'This username already exists'
 export const GENERIC_ERROR = 'An error occurred'
 export const EXISTING_ROOMNAME = 'This room name is already taken'
+export const CANNOT_CHANGE_PLAYERNAME_IN_GAME = 'You cannot change your username after joining a game.'

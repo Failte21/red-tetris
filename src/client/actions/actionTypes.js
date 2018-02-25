@@ -7,6 +7,8 @@ export const ADD_PLAYER = 'ADD_PLAYER'
 export const REMOVE_PLAYER = 'REMOVE_PLAYER'
 export const SUBSCRIBE_PLAYER = 'SUBSCRIBE_PLAYER'
 
+export const ERROR_MESSAGE = 'ERROR_MESSAGE'
+export const USER_MESSAGE = 'USER_MESSAGE'
 export const NOGAME_MESSAGE = 'NOGAME_MESSAGE' // for messages to users who are not in a game
 export const INGAME_MESSAGE = 'INGAME_MESSAGE'
 export const START_FAILURE = 'START_FAILURE'
