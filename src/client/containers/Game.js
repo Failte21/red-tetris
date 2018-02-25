@@ -7,18 +7,25 @@ import GameMeta from '../components/gameMeta/gameMeta'
 import './app.scss'
 import { parseOptions } from '../actions/gameActions'
 
-const GameRoom = ({roomName,
-                 playerName,
-                 playerNames,
-                 isPlaying,
-                leadPlayerName,
-                hasStarted }) => {
+const GameRoom = ({
+                      roomName,
+                      playerName,
+                      playerNames,
+                      isPlaying,
+                      leadPlayerName,
+                      hasStarted }) => {
 
     return (
         <div className={'tetris'}>
             <div className={'main'}>
                 <Board size={'large'}/>
-                <BoardMeta roomName={roomName} playerName={playerName} isPlaying={isPlaying} hasStarted={hasStarted} leadPlayerName={leadPlayerName} />
+                <BoardMeta
+                    roomName={roomName}
+                    playerName={playerName}
+                    isPlaying={isPlaying}
+                    hasStarted={hasStarted}
+                    leadPlayerName={leadPlayerName}
+                />
             </div>
             <div className={'opponents'}>
                 {playerNames.filter(p=>p !== playerName).map((o, i) => (

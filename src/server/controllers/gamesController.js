@@ -9,6 +9,17 @@ const get = (fieldName, fieldValue) => games.find(game => game[fieldName] === fi
 
 const getBySocketId = socketId => games.find(game => !!game.getPlayerBySocketId(socketId))
 
+export const joinOrCreate = (socket, io) => ({roomName, playerName}) => {
+    const game = get('roomName', roomName)
+
+    // disconnect user from previous games
+    if (getBySocketId(socket.id)) console.log("player was previously in room: ", getBySocketId(socket.id).roomName)
+    if (getBySocketId(socket.id)) disconnect(socket, io)()
+
+    if (!game) return create(roomName, playerName, socket)
+    return join(game, playerName, socket)
+}
+
 const create = (roomName, playerName, socket) => {
     const player = new Player(playerName, socket.id)
     if (!player) return socket.emit('action', {type: ERROR, payload: {error: GENERIC_ERROR, redirect: 'back'}})
@@ -29,21 +40,16 @@ const join = (game, playerName, socket) => {
     return socket.emit('action', {type: JOIN_GAME, payload: {game, player}})
 }
 
-export const joinOrCreate = (socket) => ({roomName, playerName}) => {
-    const game = get('roomName', roomName)
-    if (getBySocketId(socket.id)) disconnect(socket)()
-    if (!game) return create(roomName, playerName, socket)
-    return join(game, playerName, socket)
-}
-
 //Todo: Player opens another game in another window or tries to change name or re-enter old game or other weird stuff
 
-export const disconnect = (socket) => () => {
+export const disconnect = (socket, io) => () => {
     const game = getBySocketId(socket.id)
     if (!game) return//Todo: do we need to return anything ?
     const player = game.getPlayerBySocketId(socket.id)
     if (!player) return//Todo: do we need to return anything ?
     console.log(`disconnecting player ${player.playerName} from ${game.roomName}`)
     game.disconnectPlayer(player.playerName)
-    socket.to(game.roomName).emit('action', {type: UPDATE_GAME, payload: game})
+    if (game.playerNames.length && game.leadPlayerName === player.playerName)
+        game.changeLeader(0)
+    io.in(game.roomName).emit('action', {type: UPDATE_GAME, payload: game})
 }

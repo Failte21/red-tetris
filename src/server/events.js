@@ -13,7 +13,7 @@ const logerror = debug('tetris:error')
 export const initEngine = io => {
     io.on('connection', function (socket) {
         loginfo("Socket connected: " + socket.id)
-        socket.on('disconnect', gamesController.disconnect(socket))
-        socket.on(SERVER_ADD_PLAYER, gamesController.joinOrCreate(socket))
+        socket.on('disconnect', gamesController.disconnect(socket, io))
+        socket.on(SERVER_ADD_PLAYER, gamesController.joinOrCreate(socket, io))
     })
 }
