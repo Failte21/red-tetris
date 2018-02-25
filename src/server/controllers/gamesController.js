@@ -28,19 +28,22 @@ const join = (game, playerName, socket) => {
     return socket.emit('action', {type: JOIN_GAME, payload: {game, player}})
 }
 
-export const joinOrCreate = socket => ({roomName, playerName}) => {
+export const joinOrCreate = (socket) => ({roomName, playerName}) => {
+    if (getBySocketId(socket.id)) disconnect(socket)()
     const game = get('roomName', roomName)
     if (!game) return create(roomName, playerName, socket)
     return join(game, playerName, socket)
 }
 
-//Todo: Leave but not disconnect
+//Todo: Player opens another game in another window
 
-export const disconnect = socket => () => {
-    const game = getBySocketId(socket.id)
-    if (!game) return //Todo: do we need to return anything ?
-    const player = game.getPlayerBySocketId(socket.id)
-    if (!player) return //Todo: do we need to return anything ?
-    game.disconnectPlayer(player.playerName)
-    socket.to(game.roomName).emit('action', {type: UPDATE_GAME, payload: game})
+export const disconnect = (socket) => () => {
+        console.log("disconnecting socket.id", socket.id)
+        const game = getBySocketId(socket.id)
+        if (!game) return//Todo: do we need to return anything ?
+        const player = game.getPlayerBySocketId(socket.id)
+        if (!player) return//Todo: do we need to return anything ?
+        console.log(`disconnecting player ${player.playerName} from ${game.roomName}`)
+        game.disconnectPlayer(player.playerName)
+        socket.to(game.roomName).emit('action', {type: UPDATE_GAME, payload: game})
 }
