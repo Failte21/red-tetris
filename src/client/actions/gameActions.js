@@ -33,5 +33,5 @@ export const parseRoute = location => dispatch => {
     const formattedHash = location.hash.slice(1)
     const hashCheck = checkValidHashURL(formattedHash)
     if (hashCheck.error) return dispatch(startFailure(hashCheck.error))
-    else return dispatch(onPlayerEnterRoom(hashCheck.roomName, hashCheck.playerName))
+    else return dispatch(onPlayerEnterRoom(hashCheck.playerName, hashCheck.roomName))
 }

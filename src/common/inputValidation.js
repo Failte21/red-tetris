@@ -8,7 +8,7 @@ const isValidName = (string) => {
 export const checkValidHashURL = (options) => {
     console.log('options:', options)
     if (!options) return ({error: INVALID_URL_PARAMS, playerName: null, roomName: null})
-    const splitOptions = options.split(/\[|]/)
+    const splitOptions = options.split(/\[|]/).slice(0,2)
     const [roomName, playerName] = splitOptions
     console.log('splitOptions:', splitOptions)
     if (!roomName || !isValidName(roomName)) return ({error: INVALID_ROOM_NAME, playerName: null, roomName: null})
