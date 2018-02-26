@@ -18,7 +18,7 @@ const GameRoom = ({
     return (
         <div className={'tetris'}>
             <div className={'main'}>
-                <Board size={'large'}/>
+                <Board size={'large'} hasStarted={hasStarted} />
                 <BoardMeta
                     roomName={roomName}
                     playerName={playerName}
@@ -30,7 +30,7 @@ const GameRoom = ({
             <div className={'opponents'}>
                 {playerNames.filter(p=>p !== playerName).map((o, i) => (
                     <div key={i}>
-                        <Board size={'small'}/>
+                        <Board size={'small'} hasStarted={hasStarted} />
                         {o}
                     </div>
                 ))}

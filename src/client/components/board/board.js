@@ -1,38 +1,16 @@
 import React from 'react'
 import './board.scss'
+import {BOARD} from "../../../common/game";
 
 const style = {
     large: {width: '300px', height: '600px'},
     small: {width: '90px', height: '180px'}
 }
 
-const mock = [
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0,0,0,0]
-]
-
-const Board = ({size = 'large'}) => (
+const Board = ({size = 'large', hasStarted }) => (
     <div className={'board'} style={style[size]}>
-        {
-            mock.map((row, i) => (
+        {!hasStarted &&
+            BOARD.EMPTY_VISIBLE_BOARD.map((row, i) => (
                 <div key={i} className={'row'}>
                     {row.map((cell, i) => (
                         <div key={i} className={'cell'}></div>

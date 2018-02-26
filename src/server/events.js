@@ -15,5 +15,6 @@ export const initEngine = io => {
         loginfo("Socket connected: " + socket.id)
         socket.on('disconnect', gamesController.disconnect(socket, io))
         socket.on(SERVER_ADD_PLAYER, gamesController.joinOrCreate(socket, io))
+        // TODO: SERVER_START_GAME
     })
 }

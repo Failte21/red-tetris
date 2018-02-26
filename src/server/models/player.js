@@ -6,7 +6,7 @@ class PlayerModel {
         this.id = _.uniqueId()
         this.playerName = playerName
         this.socketId = socketId
-        this.currentRoomName = null
+        this.currentRoomName = ''
         this.isPlaying = false
     }
 }

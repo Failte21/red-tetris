@@ -1,0 +1,1 @@
+import {BOARD} from "../../common/game";

@@ -1,5 +1,5 @@
 import {ERROR, JOIN_GAME, NEW_GAME, REMOVE_PLAYER, UPDATE_GAME} from '../../client/actions/actionTypes'
-import {CANNOT_CHANGE_PLAYERNAME_IN_GAME, EXISTING_USERNAME, GENERIC_ERROR} from '../../common/errors'
+import {EXISTING_USERNAME, GENERIC_ERROR} from '../../common/errors'
 import {Player} from '../models/player'
 import {Game} from '../models/game'
 import _ from 'lodash'
@@ -25,6 +25,7 @@ const create = (roomName, playerName, socket) => {
     const game = new Game(roomName, player)
     games.push(game)
     socket.join(roomName)
+    player.setCurrentGame(roomName)
     return socket.emit('action', {type: NEW_GAME, payload: {game: game, player}})
 }
 
@@ -33,11 +34,13 @@ const join = (game, playerName, socket) => {
     const player = new Player(playerName, socket.id)
     if (!player) return socket.emit('action', {type: ERROR, payload: {errorMessage: GENERIC_ERROR, redirect: true}})
     game.addPlayer(player)
+    player.setCurrentGame(game.roomName)
     socket.join(game.roomName)
     socket.to(game.roomName).emit('action', {type: UPDATE_GAME, payload: game})
     return socket.emit('action', {type: JOIN_GAME, payload: {game, player}})
 }
 
+// TODO: Refactor to make not the same thing as disconnect
 export const removeFromPreviousGame = (socket, io) => {
     const game = getBySocketId(socket.id)
     if (!game) return
@@ -46,12 +49,14 @@ export const removeFromPreviousGame = (socket, io) => {
     console.log(`disconnecting player ${player.playerName} from ${game.roomName}`)
     socket.leave(game.roomName)
     game.disconnectPlayer(player.playerName)
+    player.setCurrentGame('')
     if (game.leadPlayerName === player.playerName)
         game.changeLeader(0)
     if (!game.playerNames.length) _.remove(games, {roomName: game.roomName})
     socket.to(game.roomName).emit('action', {type: REMOVE_PLAYER, payload: game})
 }
 
+//TODO: Idem
 export const disconnect = (socket) => () => {
     const game = getBySocketId(socket.id)
     if (!game) return
@@ -60,7 +65,6 @@ export const disconnect = (socket) => () => {
     console.log(`disconnecting player ${player.playerName} from ${game.roomName}`)
 
     game.disconnectPlayer(player.playerName)
-
     if (game.leadPlayerName === player.playerName)
         game.changeLeader(0)
     if (!game.playerNames.length) return _.remove(games, {roomName: game.roomName})

@@ -1,11 +1,9 @@
 import _ from 'lodash'
-
-class PieceModel {
-    // define constants for pieces
-}
+import {TETROS} from "../../common/game";
 
 export class Piece {
-    static randomPiece = () => {
-        // return new Piece(randomXaxisStartPosition, randomShape, randomColor, randomRotation)
+    constructor(index) {
+        this.index = index
+        this.shape = TETROS.SHAPES[index]
     }
 }

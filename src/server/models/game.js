@@ -1,3 +1,5 @@
+import {TETROS} from "../../common/game";
+
 class GameModel {
     constructor(roomName = null, player) {
         this.roomName = roomName
@@ -23,30 +25,23 @@ export class Game extends GameModel {
     getPlayerBySocketId = (socketId) => this.getPlayer('socketId', socketId)
 
     generatePieceList = () => {
-        // this.pieceLineUp = Array.from(new Array(100), Piece.randomPiece())
+        const randomIndex = () => TETROS.SHAPES.length
+        this.pieceLineUp = _.fill(new Array(10), randomIndex() )
     }
 
     startGame = () => {
-        // this.generatePieceList()
-        // this.playerIdsInGame = _.map(this.players, 'id')
-        // this.hasStarted = true
+        this.generatePieceList()
+        this.hasStarted = true
     }
 
     endGame = () => {
-        // this.hasEnded = true
-        // this.winner = _.find(this.players, { 'id' : this.playerIdsInGame[0].id })
+        this.hasEnded = true
+        this.pieceLineUp = []
     }
 
     hasPlayer = playerName => !!this.playerNames.find(name => name === playerName)
 
     addPlayer = (player) => {
-        //Todo: do we keep class functions as simple as possible and do the checkings in the controllers ?
-        // if (!this.hasStarted && !this.hasEnded) {
-        // 	if (this.playerNames.includes(playerName)) throw new Error('player already in game.')
-        //    const player = new Player(playerName, 1)
-        //    this.players = [...this.players, player]
-        // 	this.playerNames = [...this.playerNames, playerName]
-        // }
         this.playerNames = [...this.playerNames, player.playerName]
         this.players = [...this.players, player]
     }

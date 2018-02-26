@@ -26,10 +26,13 @@ export const BOARD = {
     HEIGHT: 24, // including hidden rows at the top
     WIDTH: 10,
     MIN_X: 0,
-    MIN_VISIBLE_X: 4, // can prob get rid of
+    MAX_X: 9,
     MIN_Y: 0,
-    MAX_X: 23,
-    MAX_Y: 9,
+    MIN_VISIBLE_Y: 4, // can prob get rid of
+    MAX_Y: 23,
+
+    EMPTY_VISIBLE_BOARD: _.fill(new Array(20), _.fill(new Array(10)))
+
 }
 
 export const GAME = {
