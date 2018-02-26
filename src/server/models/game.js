@@ -1,5 +1,4 @@
 import {TETROS} from "../../common/game";
-import Board from "../../client/components/board/board";
 import {BoardModel} from "./board";
 
 class GameModel {
