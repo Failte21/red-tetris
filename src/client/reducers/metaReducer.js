@@ -1,6 +1,6 @@
 import {
     ANNOUNCE_DELETE_IN_PROGRESS_GAME, ANNOUNCE_DELETE_READY_GAME, ANNOUNCE_NEW_GAME, DELETE_ALL, ERROR_MESSAGE,
-    JOIN_GAME, JOIN_GAME_FAILURE, JOIN_GAME_SUCCESS, NEW_GAME,
+    JOIN_GAME, ERROR, JOIN_GAME_FAILURE, JOIN_GAME_SUCCESS, NEW_GAME,
     NOGAME_MESSAGE,
     START_FAILURE, START_SUCCESS, USER_MESSAGE
 } from '../actions/actionTypes'
@@ -26,6 +26,8 @@ const metaReducer = (state = defaultState, action) => {
             return {...state, userMessage: action.payload}
         case ERROR_MESSAGE:
             return {...state, errorMessage: action.payload}
+        case ERROR:
+            return {...state, userMessage: action.payload }
         default:
             return state
     }
