@@ -1,4 +1,4 @@
-import {ERROR, JOIN_GAME, NEW_GAME, REMOVE_PLAYER, UPDATE_GAME} from '../../client/actions/actionTypes'
+import {ERROR, JOIN_GAME, NEW_GAME, REMOVE_PLAYER, UPDATE_GAME, UPDATE_SPECTRE} from '../../client/actions/actionTypes'
 import {EXISTING_USERNAME, GENERIC_ERROR} from '../../common/errors'
 import {Player} from '../models/player'
 import {Game} from '../models/game'
@@ -25,6 +25,10 @@ export const onGameStart = (socket, io) => ({roomName}) => {
     if (!game) return
     game.addToPieceLineup(pieceController.generatePieceList(50))
     // start game loop
+}
+
+export const onUpdateSpectre = (socket, io) => ({playerName, roomName, spectreData}) => {
+    socket.to(roomName, {type: UPDATE_SPECTRE, payload: {playerName, spectreData}})
 }
 
 const create = (roomName, playerName, socket) => {

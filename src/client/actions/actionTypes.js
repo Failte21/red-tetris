@@ -2,6 +2,7 @@ export const SERVER_PING = 'SERVER_PING'
 export const SERVER_ADD_PLAYER = 'SERVER_ADD_PLAYER'
 export const SERVER_REMOVE_PLAYER = 'SERVER_REMOVE_PLAYER'
 export const SERVER_START_GAME_LOOP = 'SERVER_START_GAME_LOOP'
+export const SERVER_UPDATE_SPECTRE = 'SERVER_UPDATE_SPECTRE'
 
 export const ALERT_POP = 'ALERT_POP'
 export const ADD_PLAYER = 'ADD_PLAYER'
@@ -24,6 +25,7 @@ export const NEW_GAME = 'NEW_GAME'
 export const LEAVE_GAME = 'LEAVE_GAME'
 export const DELETE_GAME = 'DELETE_GAME'
 export const UPDATE_GAME = 'UPDATE_GAME'
+export const UPDATE_SPECTRE = 'UPDATE_SPECTRE'
 
 export const ERROR = 'ERROR'
 

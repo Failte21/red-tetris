@@ -1,10 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import Board from '../components/board/board'
+import Spectre from '../components/Spectre'
 import BoardMeta from '../components/boardMeta/boardMeta'
 import './app.scss'
 import {startGameLoop} from "../actions/server";
+import Board from "./Board";
 
 const GameRoom = ({
                       roomName,
@@ -13,14 +14,14 @@ const GameRoom = ({
                       isPlaying,
                       leadPlayerName,
                       hasStarted,
-                      boardData,
                       spectres
                   }) => {
+    const mySpectre = spectres.find(s=>s.playerName===playerName)
 
     return (
         <div className={'tetris'}>
             <div className={'main'}>
-                <Board size={'large'} hasStarted={hasStarted} />
+                <Board hasStarted={hasStarted} playerName={playerName} />
 
                 {leadPlayerName === playerName &&
                     <button onClick={startGameLoop}>START GAME</button>}
@@ -32,12 +33,12 @@ const GameRoom = ({
                     hasStarted={hasStarted}
                     leadPlayerName={leadPlayerName}
                 />
+
             </div>
             <div className={'opponents'}>
-                {playerNames.filter(p=>p !== playerName).map((o, i) => (
+                {spectres.filter(s=>s.playerName !== playerName).map((spectre, i) => (
                     <div key={i}>
-                        <Board size={'small'} hasStarted={hasStarted} />
-                        {o}
+                        <Spectre hasStarted={hasStarted} playerName={spectre.playerName} spectreData={spectre.spectreData}/>
                     </div>
                 ))}
             </div>
@@ -52,7 +53,6 @@ const mapStateToProps = (state) => {
         isPlaying: state.player.isPlaying,
         hasStarted: state.game.hasStarted,
         leadPlayerName: state.game.leadPlayerName,
-        boardData: state.board.boardData,
         pieceLineUp: state.game.pieceLineUp
     }
 }

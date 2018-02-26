@@ -1,6 +1,6 @@
 import {
     JOIN_GAME, NEW_GAME, START_FAILURE, START_SUCCESS, LEAVE_GAME, DELETE_GAME,
-    REMOVE_PLAYER, DELETE_ALL, UPDATE_GAME, NOGAME_MESSAGE, ERROR
+    REMOVE_PLAYER, DELETE_ALL, UPDATE_GAME, NOGAME_MESSAGE, ERROR, UPDATE_SPECTRE
 } from '../actions/actionTypes'
 
 const defaultState = {
@@ -24,6 +24,8 @@ const gameReducer = (state = defaultState, action) => {
             return action.payload
         case UPDATE_GAME:
             return action.payload
+        case UPDATE_SPECTRE:
+            return {...state, spectres: [...state.spectres, {playerName: action.payload.playerName, spectreData: action.payload.spectreData } ]}
         case ERROR:
             return action.payload.redirect ? defaultState : state
 		default:

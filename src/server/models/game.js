@@ -1,7 +1,3 @@
-import {TETROS} from "../../common/game";
-
-import {BoardModel} from "./board";
-
 class GameModel {
     constructor(roomName = null, player) {
         this.roomName = roomName
@@ -13,8 +9,7 @@ class GameModel {
         this.hasEnded = false
         this.winnerName = ''
         this.startError = null
-        this.boards = []
-        this.spectres = []
+        this.spectres = [{playerName: player.playerName, spectreData: player.spectre}]
     }
 }
 
@@ -24,9 +19,11 @@ export class Game extends GameModel {
     }
 
     getPlayer = (field, value) => this.players.find(player => player[field] === value)
-    getBoard = (field, value) => this.boards.find(board => board[field] === value)
+
+    getSpectreBySocketId = (socketId) => this.players.find(player => player[socketId] === socketId)
 
     getPlayerByName = (playerName) => this.getPlayer('playerName', playerName)
+
     getPlayerBySocketId = (socketId) => this.getPlayer('socketId', socketId)
 
     addToPieceLineup = (lineUp) => {
@@ -48,7 +45,7 @@ export class Game extends GameModel {
     addPlayer = (player) => {
         this.playerNames = [...this.playerNames, player.playerName]
         this.players = [...this.players, player]
-        this.boards.pushs(new BoardModel(player.playerName, player.socketId))
+        this.spectres = [...this.spectres, {ownerName: player.playerName, boardData: player.spectre}]
     }
 
     changeLeader = (playerIndex) => {
@@ -58,6 +55,6 @@ export class Game extends GameModel {
     disconnectPlayer = (playerToRemoveName) => {
         this.players = this.players.filter(player => player.playerName !== playerToRemoveName)
         this.playerNames = this.playerNames.filter(playerName => playerName !== playerToRemoveName)
-        this.boards = this.boards.filter(board => board.playerName !== playerToRemoveName)
+        this.spectres = this.spectres.filter(spectre => spectre.ownerName = playerToRemoveName)
     }
 }
