@@ -6,6 +6,7 @@ import {
     SUBSCRIBE_PLAYER
 } from '../client/actions/actionTypes'
 import * as gamesController from './controllers/gamesController';
+import * as boardController from './controllers/boardController';
 
 const logerror = debug('tetris:error')
     , loginfo = debug('tetris:info')
@@ -15,6 +16,7 @@ export const initEngine = io => {
         loginfo("Socket connected: " + socket.id)
         socket.on('disconnect', gamesController.disconnect(socket, io))
         socket.on(SERVER_ADD_PLAYER, gamesController.joinOrCreate(socket, io))
-        // TODO: SERVER_START_GAME
+        // TODO: Add to client side
+        socket.on('SERVER_START_GAME', gamesController.onGameStart(socket, io))
     })
 }

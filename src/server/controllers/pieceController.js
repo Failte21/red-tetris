@@ -1,4 +1,6 @@
 import _ from 'lodash'
+import {TETROS} from "../../common/game";
+import {Piece} from "../models/piece";
 
 // not sure if we will need, just for looking at them
 export const drawPiece = (shape) => {
@@ -10,4 +12,10 @@ export const drawPiece = (shape) => {
         )
     console.log("shape", shape)
     drawnPiece.forEach((row) => console.log(row) + '\n')
+}
+
+
+export const generatePieceList = (len) => {
+    const randomIndex = () => TETROS.SHAPES.length
+    return _.fill(new Array(len), new Piece(randomIndex()) )
 }

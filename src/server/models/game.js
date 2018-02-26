@@ -1,4 +1,6 @@
 import {TETROS} from "../../common/game";
+import Board from "../../client/components/board/board";
+import {BoardModel} from "./board";
 
 class GameModel {
     constructor(roomName = null, player) {
@@ -11,6 +13,7 @@ class GameModel {
         this.hasEnded = false
         this.winnerName = ''
         this.startError = null
+        this.boards = [] // should be easier to control than from individual player instances
     }
 }
 
@@ -20,17 +23,17 @@ export class Game extends GameModel {
     }
 
     getPlayer = (field, value) => this.players.find(player => player[field] === value)
+    getBoard = (field, value) => this.boards.find(board => board[field] === value)
 
     getPlayerByName = (playerName) => this.getPlayer('playerName', playerName)
     getPlayerBySocketId = (socketId) => this.getPlayer('socketId', socketId)
 
-    generatePieceList = () => {
-        const randomIndex = () => TETROS.SHAPES.length
-        this.pieceLineUp = _.fill(new Array(10), randomIndex() )
+    addToPieceLineup = (lineUp) => {
+        this.pieceLineUp = [...lineUp]
+        // this.pieceLineUp = [...this.pieceLineUp, ...lineUp]
     }
 
     startGame = () => {
-        this.generatePieceList()
         this.hasStarted = true
     }
 
@@ -44,6 +47,7 @@ export class Game extends GameModel {
     addPlayer = (player) => {
         this.playerNames = [...this.playerNames, player.playerName]
         this.players = [...this.players, player]
+        this.boards.pushs(new BoardModel(player.playerName, player.socketId))
     }
 
     changeLeader = (playerIndex) => {
@@ -51,13 +55,8 @@ export class Game extends GameModel {
     }
 
     disconnectPlayer = (playerToRemoveName) => {
-        //Todo: do we keep class functions as simple as possible and do the checkings in the controllers ?
-        // assert(this.playerNames.includes(playerToRemoveName), 'player already removed from game.')
-        // if (playerToRemoveName === this.leadPlayerName) {
-        //     const playerIndex = this.playerNames.indexOf(playerToRemoveName)
-        //     this.changeLeader(playerIndex)
-        // }
         this.players = this.players.filter(player => player.playerName !== playerToRemoveName)
         this.playerNames = this.playerNames.filter(playerName => playerName !== playerToRemoveName)
+        this.boards = this.boards.filter(board => board.playerName !== playerToRemoveName)
     }
 }

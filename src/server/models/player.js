@@ -1,20 +1,11 @@
 import _ from 'lodash'
+import {BOARD} from "../../common/game";
 
-class PlayerModel {
+export class Player {
     constructor(playerName = null, socketId = null) {
-        if (!socketId || !playerName) throw new Error('Player has no socket ID or playerName.')
-        this.id = _.uniqueId()
         this.playerName = playerName
         this.socketId = socketId
-        this.currentRoomName = ''
         this.isPlaying = false
     }
-}
 
-export class Player extends PlayerModel {
-    constructor(playerName, socketId) {
-        super(playerName, socketId)
-    }
-
-    setCurrentGame = roomName => this.currentRoomName = roomName
 }
