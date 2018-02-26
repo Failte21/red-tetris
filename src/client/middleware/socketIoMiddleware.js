@@ -6,13 +6,8 @@ const socketIoMiddleWare = socket => ({dispatch, getState}) => {
 		socket.on('action', dispatch)
     }
 	return next => action => {
-		if (socket && action.type === '@@router/LOCATION_CHANGE') {
+		if (socket && action.type === '@@router/LOCATION_CHANGE')
 		    dispatch(parseRoute(action.payload))
-		}
-		if (socket && action.type === ERROR && action.payload.redirect) {
-		    // TODO: Get message to exist only temporarily
-            return dispatch(goBackWithError(action.payload.error))
-        }
 		if(socket && action.type && action.type.indexOf('SERVER_') === 0)
 			socket.emit(action.type, action.payload)
 		return next(action)

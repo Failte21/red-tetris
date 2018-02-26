@@ -1,8 +1,8 @@
-import {ERROR} from '../actions/actionTypes'
+import {ERROR, ERROR_MESSAGE} from '../actions/actionTypes'
 import { push } from 'react-router-redux'
 
 const errorHandlerMiddleware = ({dispatch}) => next => action => {
-    if (action.type === ERROR) dispatch(push('/'))
+    if (action.type === ERROR && action.payload.redirect ) dispatch(push('/'))
     next(action)
 }
 

@@ -4,6 +4,7 @@ import {
     NOGAME_MESSAGE,
     START_FAILURE, START_SUCCESS, USER_MESSAGE
 } from '../actions/actionTypes'
+import {JOIN_ROOM_MSG, NEW_GAME_MSG} from "../../common/messages";
 
 const defaultState = {
     userMessage: '',
@@ -17,17 +18,15 @@ const metaReducer = (state = defaultState, action) => {
         case START_FAILURE:
             return {...state, startError: true, errorMessage: action.payload.errorMessage }
         case JOIN_GAME:
-            return {...state, startError: false, userMessage: '' }
-        // case JOIN_GAME_FAILURE:
-        //     return {...state, startError: true, errorMesssage: action.payload.errorMessage }
-        // case JOIN_GAME_SUCCESS:
-        //     return {...state, startError: false, errorMessage: '', userMessage: 'You have joined a game!' }
+            return {...state, startError: false, errorMessage: '', userMessage: JOIN_ROOM_MSG }
+        case NEW_GAME: //same as join game unless we want to keep user messages
+            return {...state, startError: false, errorMessage: '', userMessage: NEW_GAME_MSG }
         case USER_MESSAGE:
             return {...state, userMessage: action.payload}
         case ERROR_MESSAGE:
             return {...state, errorMessage: action.payload}
         case ERROR:
-            return {...state, userMessage: action.payload }
+            return {...state, errorMessage: action.payload.errorMessage, startFailure: !!action.payload.redirect }
         default:
             return state
     }

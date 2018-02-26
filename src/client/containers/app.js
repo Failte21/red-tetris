@@ -13,9 +13,9 @@ const App = ({
 
     return (
         <div className={'tetris'}>
-            Location: {hash}
-            ERROR: {errorMessage ? errorMessage : 'none'}
-            MESSAGE: {userMessage ? userMessage : 'none'}
+            Location: {hash}<br/>
+            ERROR: {errorMessage ? errorMessage : 'none'}<br/>
+            MESSAGE: {userMessage ? userMessage : 'none'}<br/>
 
             {(playerName && roomName) && <Game playerName={playerName} roomName={roomName} />}
         </div>
