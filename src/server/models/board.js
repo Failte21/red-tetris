@@ -2,6 +2,7 @@ import {BOARD, TETROS} from "../../common/game";
 import {Piece} from "./piece";
 
 // to avoid naming conflict with component
+// TODO: Maybe make extend Player
 export class BoardModel {
     constructor(playerName, socketId) {
         this.playerName = playerName
