@@ -1,4 +1,5 @@
 import {TETROS} from "../../common/game";
+
 import {BoardModel} from "./board";
 
 class GameModel {
@@ -12,7 +13,8 @@ class GameModel {
         this.hasEnded = false
         this.winnerName = ''
         this.startError = null
-        this.boards = [] // should be easier to control than from individual player instances
+        this.boards = []
+        this.spectres = []
     }
 }
 

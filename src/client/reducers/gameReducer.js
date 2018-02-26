@@ -10,7 +10,8 @@ const defaultState = {
 	pieceLineUp: [],
 	hasStarted: false,
 	hasEnded: false,
-	winnerName: null
+	winnerName: null,
+    spectres: []
 }
 
 const gameReducer = (state = defaultState, action) => {

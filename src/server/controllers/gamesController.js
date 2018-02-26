@@ -12,7 +12,6 @@ const games = []
 const get = (fieldName, fieldValue) => games.find(game => game[fieldName] === fieldValue)
 
 const getGameBySocketId = socketId => games.find(game => !!game.getPlayerBySocketId(socketId))
-//const getPlayerBySocketId = socketId => players.find(player => !!player.socketId === socketId)
 
 export const joinOrCreate = (socket, io) => ({roomName, playerName}) => {
     const game = get('roomName', roomName)
@@ -21,7 +20,7 @@ export const joinOrCreate = (socket, io) => ({roomName, playerName}) => {
     return join(game, playerName, socket)
 }
 
-export const onGameStart = (socket, io) => ({roomName, playerName}) => {
+export const onGameStart = (socket, io) => ({roomName}) => {
     const game = get('roomName', roomName)
     if (!game) return
     game.addToPieceLineup(pieceController.generatePieceList(50))

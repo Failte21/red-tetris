@@ -5,7 +5,6 @@ import './app.scss'
 import Game from "./Game"
 
 const App = ({
-                 hash,
                  roomName,
                  errorMessage,
                  userMessage,
@@ -13,7 +12,6 @@ const App = ({
 
     return (
         <div className={'tetris'}>
-            Location: {hash}<br/>
             ERROR: {errorMessage ? errorMessage : 'none'}<br/>
             MESSAGE: {userMessage ? userMessage : 'none'}<br/>
 
@@ -27,8 +25,7 @@ const mapStateToProps = (state) => {
         errorMessage: state.meta.errorMessage,
         userMessage: state.meta.userMessage,
         roomName: state.game.roomName,
-        playerName: state.player.playerName,
-        hash: state.router.location.hash
+        playerName: state.player.playerName
     }
 }
 

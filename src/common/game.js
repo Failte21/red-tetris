@@ -30,7 +30,7 @@ export const BOARD = {
     MIN_Y: 0,
     MAX_Y: 21,
 
-    EMPTY_VISIBLE_BOARD: _.fill(new Array(20), _.fill(new Array(10), 0))
+    EMPTY_NEW_BOARD: _.fill(new Array(20), _.fill(new Array(10), 0))
 
 }
 

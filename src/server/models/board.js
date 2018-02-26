@@ -3,11 +3,13 @@ import {Piece} from "./piece";
 
 // to avoid naming conflict with component
 // TODO: Maybe make extend Player
+
 export class BoardModel {
     constructor(playerName, socketId) {
         this.playerName = playerName
         this.socketId = socketId
         this.boardData = _.fill(new Array(BOARD.HEIGHT), _.fill(new Array(BOARD.WIDTH), 0))
+        this.currentPiece = null
     }
 
     getVisibleBoard = () => {

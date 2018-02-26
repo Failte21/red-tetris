@@ -17,5 +17,5 @@ export const drawPiece = (shape) => {
 
 export const generatePieceList = (len) => {
     const randomIndex = () => TETROS.SHAPES.length
-    return _.fill(new Array(len), new Piece(randomIndex()) )
+    return _.fill(new Array(len), new Piece(randomIndex()))
 }
