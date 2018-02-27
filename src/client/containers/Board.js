@@ -4,11 +4,11 @@ import { bindActionCreators } from 'redux'
 import '../components/board/board.scss'
 import Spectre from "../components/Spectre";
 
-const Board = ({ hasStarted, playerName, boardData, pieceLineUp, isPlaying }) => (
+const Board = ({ isInProgress, playerName, boardData, pieceLineUp, isPlaying }) => (
     <div className={'playerBoard'}>
         <Spectre
             size={'large'}
-            hasStarted={hasStarted}
+            isInProgress={isInProgress}
             playerName={playerName}
             spectreData={boardData}
             isPlaying={isPlaying} />

@@ -13,9 +13,10 @@ export const onPlayerEnterRoom = (playerName, roomName) => {
   }
 }
 
-export const startGameLoop = (roomName) => {
-  return {
+export const startGameLoop = (roomName) => dispatch => {
+  console.log("'starting game loop'", 'starting game loop')
+  dispatch({
     type: SERVER_START_GAME_LOOP,
-    payload: { roomName }
-  }
+    payload: {roomName}
+  })
 }

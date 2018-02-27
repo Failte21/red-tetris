@@ -1,3 +1,6 @@
+import * as pieceController from "../controllers/pieceController";
+import assert from 'assert'
+
 class GameModel {
     constructor(roomName = null, player) {
         this.roomName = roomName
@@ -5,54 +8,17 @@ class GameModel {
         this.playerNames = [player.playerName]
         this.players = [player]
         this.pieceLineUp = []
-        this.hasStarted = false
-        this.hasEnded = false
+        this.isInProgress = false
         this.winnerName = ''
-        this.startError = null
+        this.isSinglePlayer = true
     }
 }
 
 // this.spectres = [{playerName: player.playerName, spectreData: player.spectre}]
 export class Game extends GameModel {
-    constructor(roomName, leadPlayerName) {
-        super(roomName, leadPlayerName)
+    constructor(roomName, player) {
+        super(roomName, player)
     }
-
-    get hasPlayers() {
-        return this.playerNames.length
-    }
-
-    getPlayer = (field, value) => this.players.find(player => player[field] === value)
-
-    // getSpectreBySocketId = (socketId) => this.players.find(player => player[socketId] === socketId)
-
-    // getPlayerByName = (playerName) => this.getPlayer('playerName', playerName)
-
-    getPlayerBySocketId = (socketId) => this.getPlayer('socketId', socketId)
-
-    addToPieceLineup = (lineUp) => {
-        this.pieceLineUp = [...lineUp]
-    }
-
-    startGame = () => {
-        this.hasStarted = true
-    }
-
-    endGame = () => {
-        this.hasEnded = true
-        this.pieceLineUp = []
-    }
-
-    hasPlayer = playerName => !!this.playerNames.find(name => name === playerName)
-
-    addPlayer = (player) => {
-        this.playerNames = [...this.playerNames, player.playerName]
-        this.players = [...this.players, player]
-    }
-    //
-    // changeLeader = (playerIndex) => {
-    //     this.leadPlayerName = this.playerNames[playerIndex] || ''
-    // }
 
     disconnectPlayer = (socketId) => {
         const player = this.getPlayerBySocketId(socketId)
@@ -61,9 +27,45 @@ export class Game extends GameModel {
         return this
     }
 
+    addPlayer = (player) => {
+        this.playerNames = [...this.playerNames, player.playerName]
+        this.players = [...this.players, player]
+        this.setIsSinglePlayer()
+        return this
+    }
+
+    startGame = () => {
+        this.addToPieceLineup()
+        this.isInProgress = true
+        this.setIsSinglePlayer()
+        return this
+    }
+
+    endGame = () => {
+        this.isInProgress = false
+        this.pieceLineUp = []
+        return this
+    }
+
+    addToPieceLineup = () => {
+        this.pieceLineUp = [...this.pieceLineUp, ...pieceController.generatePieceList(10)]
+    }
+
     _disconnectPlayer = (playerToRemoveName) => {
         this.players = this.players.filter(player => player.playerName !== playerToRemoveName)
         this.playerNames = this.playerNames.filter(playerName => playerName !== playerToRemoveName)
-        this.leadPlayerName = this.players[0] || ''
+        this.leadPlayerName = this.playerNames[0] || ''
+        this.setIsSinglePlayer()
     }
+
+    setIsSinglePlayer = () => this.isSinglePlayer = this.playerNames.length === 1
+
+    get hasPlayers() {
+        return this.playerNames.length
+    }
+    // getSpectreBySocketId = (socketId) => this.players.find(player => player[socketId] === socketId)
+    getPlayer = (field, value) => this.players.find(player => player[field] === value)
+    getPlayerByName = (playerName) => this.getPlayer('playerName', playerName)
+    getPlayerBySocketId = (socketId) => this.getPlayer('socketId', socketId)
+    hasPlayer = playerName => !!this.playerNames.find(name => name === playerName)
 }

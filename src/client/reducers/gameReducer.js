@@ -1,6 +1,6 @@
 import {
     JOIN_GAME, NEW_GAME, START_FAILURE, START_SUCCESS, LEAVE_GAME, DELETE_GAME,
-    REMOVE_PLAYER, DELETE_ALL, UPDATE_GAME, NOGAME_MESSAGE, ERROR, UPDATE_SPECTRE
+    REMOVE_PLAYER, DELETE_ALL, UPDATE_GAME, NOGAME_MESSAGE, ERROR, UPDATE_SPECTRE, START_GAME_LOOP
 } from '../actions/actionTypes'
 
 const defaultState = {
@@ -9,10 +9,9 @@ const defaultState = {
     playerNames: [],
     players: [],
     pieceLineUp: [],
-    hasStarted: false,
-    hasEnded: false,
+    isInProgress: false,
     winnerName: '',
-    startError: null,
+    isSinglePlayer: true
 }
 
 const gameReducer = (state = defaultState, action) => {
@@ -25,8 +24,8 @@ const gameReducer = (state = defaultState, action) => {
             return action.payload
         case UPDATE_GAME:
             return action.payload
-        case UPDATE_SPECTRE:
-            return {...state, spectres: [...state.spectres, {playerName: action.payload.playerName, spectreData: action.payload.spectreData } ]}
+        case START_GAME_LOOP: // same as UPDATE_GAME
+            return action.payload.game
         case ERROR:
             return action.payload.redirect ? defaultState : state
 		default:

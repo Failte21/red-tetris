@@ -1,7 +1,7 @@
 import React from 'react'
 import './board/board.scss'
 
-const Spectre = ({ isPlaying, size, hasStarted, playerName, spectreData }) => (
+const Spectre = ({ isPlaying, size, isInProgress, playerName, spectreData }) => (
     <div className={'board ' + [size]}>
         {playerName}
         {spectreData.map((row, i) => (

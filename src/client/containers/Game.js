@@ -13,9 +13,10 @@ const GameRoom = ({
                       playerNames,
                       isPlaying,
                       leadPlayerName,
-                      hasStarted,
+                      isInProgress,
                       spectres,
                       pieceLineUp,
+                      startGameLoop
                   }) => {
     const mySpectre = spectres.find(s => s.playerName === playerName)
 
@@ -23,20 +24,20 @@ const GameRoom = ({
         <div className={'tetris'}>
             <div className={'main'}>
                 <Board
-                    hasStarted={hasStarted}
+                    isInProgress={isInProgress}
                     playerName={playerName}
                     boardData={mySpectre.spectreData}
                     pieceLineUp={pieceLineUp}
                     isPlayer={isPlaying} />
 
                 {leadPlayerName === playerName &&
-                    <button onClick={startGameLoop}>START GAME</button>}
+                    <button onClick={()=>startGameLoop(roomName)}>START GAME</button>}
 
                 <BoardMeta
                     roomName={roomName}
                     playerName={playerName}
                     isPlaying={isPlaying}
-                    hasStarted={hasStarted}
+                    isInProgress={isInProgress}
                     leadPlayerName={leadPlayerName}
                 />
 
@@ -46,7 +47,7 @@ const GameRoom = ({
                     <div key={i}>
                         <Spectre
                             size={'small'}
-                            hasStarted={hasStarted}
+                            isInProgress={isInProgress}
                             playerName={spectre.playerName}
                             spectreData={spectre.spectreData}
                             isPlaying={spectre.isPlaying} />
@@ -62,16 +63,14 @@ const mapStateToProps = (state) => {
         playerNames: state.game.playerNames,
         spectres: state.game.spectres, //?
         isPlaying: state.player.isPlaying,
-        hasStarted: state.game.hasStarted,
+        isInProgress: state.game.isInProgress,
         leadPlayerName: state.game.leadPlayerName,
         pieceLineUp: state.game.pieceLineUp,
         spectres: state.game.players.map(p=>({playerName: p.playerName, spectreData: p.spectre, isPlaying: p.isPlaying}))
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return bindActionCreators({startGameLoop}, dispatch)
-}
+const mapDispatchToProps = {startGameLoop}
 
 export default connect(mapStateToProps, mapDispatchToProps)(GameRoom)
 
