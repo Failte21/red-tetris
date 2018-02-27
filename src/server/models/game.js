@@ -18,6 +18,10 @@ export class Game extends GameModel {
         super(roomName, leadPlayerName)
     }
 
+    get hasPlayers() {
+        return this.playerNames.length
+    }
+
     getPlayer = (field, value) => this.players.find(player => player[field] === value)
 
     // getSpectreBySocketId = (socketId) => this.players.find(player => player[socketId] === socketId)
@@ -45,13 +49,21 @@ export class Game extends GameModel {
         this.playerNames = [...this.playerNames, player.playerName]
         this.players = [...this.players, player]
     }
+    //
+    // changeLeader = (playerIndex) => {
+    //     this.leadPlayerName = this.playerNames[playerIndex] || ''
+    // }
 
-    changeLeader = (playerIndex) => {
-        this.leadPlayerName = this.playerNames[playerIndex] || ''
+    disconnectPlayer = (socketId) => {
+        const player = this.getPlayerBySocketId(socketId)
+        assert(player, 'trying to disconnect nonexistent player')
+        this._disconnectPlayer(player.playerName)
+        return this
     }
 
-    disconnectPlayer = (playerToRemoveName) => {
+    _disconnectPlayer = (playerToRemoveName) => {
         this.players = this.players.filter(player => player.playerName !== playerToRemoveName)
         this.playerNames = this.playerNames.filter(playerName => playerName !== playerToRemoveName)
+        this.leadPlayerName = this.players[0] || ''
     }
 }

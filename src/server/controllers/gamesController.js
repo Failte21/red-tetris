@@ -52,33 +52,17 @@ const join = (game, playerName, socket) => {
 
 // TODO: Refactor to make not the same thing as disconnect
 export const removeFromPreviousGame = (socket, io) => {
-    const game = getGameBySocketId(socket.id)
-    assert(game, 'trying to remove from game that player was not in.')
-    if (!game) return
-    const player = game.getPlayerBySocketId(socket.id)
-    if (!player) return
-    console.log(`disconnecting player ${player.playerName} from ${game.roomName}`)
+    let game = getGameBySocketId(socket.id)
+    assert(game, 'trying to disconnect player from game that does not exist.')
     socket.leave(game.roomName)
-    game.disconnectPlayer(player.playerName)
-    if (game.leadPlayerName === player.playerName)
-        game.changeLeader(0)
-    if (!game.playerNames.length) _.remove(games, {roomName: game.roomName})
-    socket.to(game.roomName).emit('action', {type: REMOVE_PLAYER, payload: game})
+    disconnect(socket, io)()
 }
 
 //TODO: Idem
-export const disconnect = (socket) => () => {
-    const game = getGameBySocketId(socket.id) // see if player was connected to a game
-    if (!game) return
-    const player = game.getPlayerBySocketId(socket.id)
-    assert(player, 'if game found, player should be in game.')
-    if (!player) return
-    console.log(`disconnecting player ${player.playerName} from ${game.roomName}`)
-
-    game.disconnectPlayer(player.playerName)
-    if (game.leadPlayerName === player.playerName)
-        game.changeLeader(0)
-    if (!game.playerNames.length) return _.remove(games, {roomName: game.roomName})
-    assert(game, 'game exists')
-    socket.to(game.roomName).emit('action', {type: REMOVE_PLAYER, payload: game})
+export const disconnect = (socket, io) => () => {
+    let game = getGameBySocketId(socket.id)
+    game.disconnectPlayer(socket.id)
+    if (game.hasPlayers)
+        return io.in(game.roomName).emit('action', {type: REMOVE_PLAYER, payload: game})
+    else return _.remove(games, {roomName: game.roomName})
 }
