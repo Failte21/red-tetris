@@ -2,7 +2,7 @@ import {
     ERROR, JOIN_GAME, NEW_GAME, REMOVE_PLAYER, START_GAME_LOOP, UPDATE_GAME,
     UPDATE_SPECTRE
 } from '../../client/actions/actionTypes'
-import {EXISTING_USERNAME, GENERIC_ERROR} from '../../common/errors'
+import {CANNOT_ENTER_GAME_IN_PROGRESS, EXISTING_USERNAME, GENERIC_ERROR} from '../../common/errors'
 import {Player} from '../models/player'
 import {Game} from '../models/game'
 import * as pieceController from './pieceController'
@@ -45,6 +45,8 @@ const create = (roomName, playerName, socket) => {
 
 const join = (game, playerName, socket) => {
     if (game.hasPlayer(playerName)) return socket.emit('action', {type: ERROR, payload: {errorMessage: EXISTING_USERNAME, redirect: true}})
+    if (game.isInProgress) return socket.emit('action', {type: ERROR, payload: {errorMessage: CANNOT_ENTER_GAME_IN_PROGRESS, redirect: true}})
+
     const player = new Player(playerName, socket.id)
     if (!player) return socket.emit('action', {type: ERROR, payload: {errorMessage: GENERIC_ERROR, redirect: true}})
     game.addPlayer(player)
@@ -61,6 +63,7 @@ export const removeFromPreviousGame = (socket, io) => {
 }
 
 export const disconnect = (socket, io) => () => {
+    assert(socket.id, 'where is socket id?')
     let game = getGameBySocketId(socket.id)
     if (!game) return
     game.disconnectPlayer(socket.id)

@@ -61,7 +61,6 @@ const GameRoom = ({
 const mapStateToProps = (state) => {
     return {
         playerNames: state.game.playerNames,
-        spectres: state.game.spectres, //?
         isPlaying: state.player.isPlaying,
         isInProgress: state.game.isInProgress,
         leadPlayerName: state.game.leadPlayerName,
