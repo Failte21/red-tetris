@@ -14,14 +14,20 @@ const GameRoom = ({
                       isPlaying,
                       leadPlayerName,
                       hasStarted,
-                      spectres
+                      spectres,
+                      pieceLineUp,
                   }) => {
-    const mySpectre = spectres.find(s=>s.playerName===playerName)
+    const mySpectre = spectres.find(s => s.playerName === playerName)
 
     return (
         <div className={'tetris'}>
             <div className={'main'}>
-                <Board hasStarted={hasStarted} playerName={playerName} />
+                <Board
+                    hasStarted={hasStarted}
+                    playerName={playerName}
+                    boardData={mySpectre.spectreData}
+                    pieceLineUp={pieceLineUp}
+                    isPlayer={isPlaying} />
 
                 {leadPlayerName === playerName &&
                     <button onClick={startGameLoop}>START GAME</button>}
@@ -38,7 +44,12 @@ const GameRoom = ({
             <div className={'opponents'}>
                 {spectres.filter(s=>s.playerName !== playerName).map((spectre, i) => (
                     <div key={i}>
-                        <Spectre hasStarted={hasStarted} playerName={spectre.playerName} spectreData={spectre.spectreData}/>
+                        <Spectre
+                            size={'small'}
+                            hasStarted={hasStarted}
+                            playerName={spectre.playerName}
+                            spectreData={spectre.spectreData}
+                            isPlaying={spectre.isPlaying} />
                     </div>
                 ))}
             </div>
@@ -53,7 +64,8 @@ const mapStateToProps = (state) => {
         isPlaying: state.player.isPlaying,
         hasStarted: state.game.hasStarted,
         leadPlayerName: state.game.leadPlayerName,
-        pieceLineUp: state.game.pieceLineUp
+        pieceLineUp: state.game.pieceLineUp,
+        spectres: state.game.players.map(p=>({playerName: p.playerName, spectreData: p.spectre, isPlaying: p.isPlaying}))
     }
 }
 

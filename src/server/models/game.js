@@ -9,10 +9,10 @@ class GameModel {
         this.hasEnded = false
         this.winnerName = ''
         this.startError = null
-        this.spectres = [{playerName: player.playerName, spectreData: player.spectre}]
     }
 }
 
+// this.spectres = [{playerName: player.playerName, spectreData: player.spectre}]
 export class Game extends GameModel {
     constructor(roomName, leadPlayerName) {
         super(roomName, leadPlayerName)
@@ -20,15 +20,14 @@ export class Game extends GameModel {
 
     getPlayer = (field, value) => this.players.find(player => player[field] === value)
 
-    getSpectreBySocketId = (socketId) => this.players.find(player => player[socketId] === socketId)
+    // getSpectreBySocketId = (socketId) => this.players.find(player => player[socketId] === socketId)
 
-    getPlayerByName = (playerName) => this.getPlayer('playerName', playerName)
+    // getPlayerByName = (playerName) => this.getPlayer('playerName', playerName)
 
     getPlayerBySocketId = (socketId) => this.getPlayer('socketId', socketId)
 
     addToPieceLineup = (lineUp) => {
         this.pieceLineUp = [...lineUp]
-        // this.pieceLineUp = [...this.pieceLineUp, ...lineUp]
     }
 
     startGame = () => {
@@ -45,7 +44,6 @@ export class Game extends GameModel {
     addPlayer = (player) => {
         this.playerNames = [...this.playerNames, player.playerName]
         this.players = [...this.players, player]
-        this.spectres = [...this.spectres, {ownerName: player.playerName, boardData: player.spectre}]
     }
 
     changeLeader = (playerIndex) => {
@@ -55,6 +53,5 @@ export class Game extends GameModel {
     disconnectPlayer = (playerToRemoveName) => {
         this.players = this.players.filter(player => player.playerName !== playerToRemoveName)
         this.playerNames = this.playerNames.filter(playerName => playerName !== playerToRemoveName)
-        this.spectres = this.spectres.filter(spectre => spectre.ownerName = playerToRemoveName)
     }
 }

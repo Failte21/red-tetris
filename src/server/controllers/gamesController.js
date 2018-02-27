@@ -53,6 +53,7 @@ const join = (game, playerName, socket) => {
 // TODO: Refactor to make not the same thing as disconnect
 export const removeFromPreviousGame = (socket, io) => {
     const game = getGameBySocketId(socket.id)
+    assert(game, 'trying to remove from game that player was not in.')
     if (!game) return
     const player = game.getPlayerBySocketId(socket.id)
     if (!player) return
@@ -67,9 +68,10 @@ export const removeFromPreviousGame = (socket, io) => {
 
 //TODO: Idem
 export const disconnect = (socket) => () => {
-    const game = getGameBySocketId(socket.id)
+    const game = getGameBySocketId(socket.id) // see if player was connected to a game
     if (!game) return
     const player = game.getPlayerBySocketId(socket.id)
+    assert(player, 'if game found, player should be in game.')
     if (!player) return
     console.log(`disconnecting player ${player.playerName} from ${game.roomName}`)
 

@@ -18,9 +18,9 @@ const metaReducer = (state = defaultState, action) => {
         case START_FAILURE:
             return {...state, startError: true, errorMessage: action.payload.errorMessage }
         case JOIN_GAME:
-            return {...state, startError: false, errorMessage: '', userMessage: JOIN_ROOM_MSG }
-        case NEW_GAME: //same as join game unless we want to keep user messages
-            return {...state, startError: false, errorMessage: '', userMessage: NEW_GAME_MSG }
+            return {...state, startError: false, errorMessage: '' }
+        case NEW_GAME: //same as join game
+            return {...state, startError: false, errorMessage: '' }
         case USER_MESSAGE:
             return {...state, userMessage: action.payload}
         case ERROR_MESSAGE:

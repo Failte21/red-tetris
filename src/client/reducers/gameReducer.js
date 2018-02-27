@@ -4,14 +4,15 @@ import {
 } from '../actions/actionTypes'
 
 const defaultState = {
-	roomName: '',
-	leadPlayerName: '',
-	playerNames: [],
-	pieceLineUp: [],
-	hasStarted: false,
-	hasEnded: false,
-	winnerName: null,
-    spectres: []
+    roomName: '',
+    leadPlayerName: '',
+    playerNames: [],
+    players: [],
+    pieceLineUp: [],
+    hasStarted: false,
+    hasEnded: false,
+    winnerName: '',
+    startError: null,
 }
 
 const gameReducer = (state = defaultState, action) => {

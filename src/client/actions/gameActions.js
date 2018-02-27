@@ -1,16 +1,8 @@
 import {checkValidHashURL} from "../../common/inputValidation"
-import {ERROR, ERROR_MESSAGE, NOGAME_MESSAGE, START_FAILURE, USER_MESSAGE} from './actionTypes'
+import {ERROR, USER_MESSAGE} from './actionTypes'
 import {onPlayerEnterRoom} from "./server"
-import { goBack, push } from 'react-router-redux'
 import {WELCOME_MSG} from "../../common/messages";
 
-// export const showErrorMessage = (message) => {
-//     return ({
-//         type: ERROR_MESSAGE,
-//         payload: message
-//     })
-// }
-//
 export const showUserMessage = (message) => {
     return ({
         type: USER_MESSAGE,
