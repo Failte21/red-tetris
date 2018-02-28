@@ -2,22 +2,28 @@ import {configureStore} from './helpers/server'
 import reducer from '../src/client/reducers'
 import chai from "chai"
 import playerReducer, {emptyPlayer} from "../src/client/reducers/playerReducer";
+import {UPDATE_PLAYER} from "../src/client/actions/actionTypes";
+import {BOARD} from "../src/common/game";
 
 const assert = chai.assert
 const expect = chai.expect
 const should = chai.should()
 
+const examples = [
+    {desc: 'empty player', payload: emptyPlayer },
+    {desc: 'valid player', payload: {
+        playerName: 'jane',
+        socketId: 'abcdefg12345678',
+        isPlaying: true,
+        spectre: BOARD.EMPTY_NEW_BOARD
+        }
+    }
+]
+
 describe('player reducer', function(){
-    // it('should put an error message in the store', function(){
-    //     const initialState = {}
-    //     const store =  configureStore(reducer, null, initialState)
-    //     expect()
-    // });
-
-    it('should return the initial state', () => {
-        expect(playerReducer(undefined, {})).toEqual(emptyPlayer)
+    it('state is an empty player when action is undefined', () => {
+        expect(playerReducer(undefined, {})).to.eql(emptyPlayer)
     })
-
 });
 
 /**

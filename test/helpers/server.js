@@ -5,11 +5,15 @@ import errorHandlerMiddleware from "../../src/client/middleware/errorHandlerMidd
 import {routerMiddleware} from "react-router-redux";
 import createHistory from 'history/createBrowserHistory'
 import socketIoMiddleWare from "../../src/client/middleware/socketIoMiddleware";
+import * as params from "../../params";
+require('jsdom-global')()
 
-const history = createHistory()
+// const io = require('socket.io').listen(params.server.port)
+
+export const fakeHistory = createHistory('/')
 
 export const startServer = (params, cb) => {
-  server.create(params)
+  server.create(params) // is proper io getting passed too?
     .then( server => cb(null, server) )
     .catch( err => cb(err) )
 }
@@ -23,7 +27,7 @@ export const configureStore = (reducer, socket, initialState) => createStore(
     initialState,
     applyMiddleware(
         socketIoMiddleWare(socket),
-        routerMiddleware(history),
+        routerMiddleware(fakeHistory),
         errorHandlerMiddleware,
         thunk
     )
