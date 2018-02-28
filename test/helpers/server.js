@@ -2,8 +2,6 @@ import * as server from '../../src/server/index'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 
-require.extensions['.scss'] = function () {}
-
 export const startServer = (params, cb) => {
   server.create(params)
     .then( server => cb(null, server) )

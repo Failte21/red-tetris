@@ -2,8 +2,6 @@ import debug from 'debug'
 import fs from 'fs'
 import {initEngine} from "./events"
 
-require.extensions['.scss'] = function () {}
-
 const logerror = debug('tetris:error')
     , loginfo = debug('tetris:info')
 
