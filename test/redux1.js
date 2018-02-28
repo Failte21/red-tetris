@@ -1,23 +1,48 @@
 import {configureStore} from './helpers/server'
-import rootReducer from '../src/client/reducers'
-import {alert} from '../src/client/actions/alert'
+import reducer from '../src/client/reducers'
 import chai from "chai"
+import playerReducer, {emptyPlayer} from "../src/client/reducers/playerReducer";
 
-const MESSAGE = "message"
+const assert = chai.assert
+const expect = chai.expect
+const should = chai.should()
 
-chai.should()
+describe('player reducer', function(){
+    // it('should put an error message in the store', function(){
+    //     const initialState = {}
+    //     const store =  configureStore(reducer, null, initialState)
+    //     expect()
+    // });
 
-describe('Fake redux test', function(){
-  it('alert it', function(done){
-    const initialState = {}
-    const store =  configureStore(rootReducer, null, initialState, {
-      ALERT_POP: ({dispatch, getState}) =>  {
-        const state = getState()
-        state.alert.message.should.equal(MESSAGE)
-        done()
-      }
+    it('should return the initial state', () => {
+        expect(playerReducer(undefined, {})).toEqual(emptyPlayer)
     })
-    store.dispatch(alert(MESSAGE))
-  });
 
 });
+
+/**
+ * boilerplate
+ */
+// import {configureStore} from './helpers/server'
+// import rootReducer from '../src/client/reducers'
+// import {ALERT_POP, alert} from '../src/client/actions/alert'
+// import chai from "chai"
+//
+// const MESSAGE = "message"
+//
+// chai.should()
+//
+// describe('Fake redux test', function(){
+//     it('alert it', function(done){
+//         const initialState = {}
+//         const store =  configureStore(rootReducer, null, initialState, {
+//             ALERT_POP: ({dispatch, getState}) =>  {
+//                 const state = getState()
+//                 state.message.should.equal(MESSAGE)
+//                 done()
+//             }
+//         })
+//         store.dispatch(alert(MESSAGE))
+//     });
+//
+// });

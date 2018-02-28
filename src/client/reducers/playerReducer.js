@@ -3,7 +3,7 @@ import {
     UPDATE_PLAYER
 } from '../actions/actionTypes'
 
-const emptyPlayer = {
+export const emptyPlayer = {
 	playerName: '',
 	socketId: '',
 	isPlaying: false,

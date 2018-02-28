@@ -1,6 +1,12 @@
 import * as server from '../../src/server/index'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
+import errorHandlerMiddleware from "../../src/client/middleware/errorHandlerMiddleware";
+import {routerMiddleware} from "react-router-redux";
+import createHistory from 'history/createBrowserHistory'
+import socketIoMiddleWare from "../../src/client/middleware/socketIoMiddleware";
+
+const history = createHistory()
 
 export const startServer = (params, cb) => {
   server.create(params)
@@ -8,36 +14,17 @@ export const startServer = (params, cb) => {
     .catch( err => cb(err) )
 }
 
-export const configureStore = (reducer, socket, initialState, types) => createStore(
-  reducer,
-  initialState,
-  applyMiddleware(
-    myMiddleware(types),
-    socketIoMiddleWare(socket),
-    thunk
-  )
+/**
+ *
+ * ?? Supposed to mock our server exactly or not?
+ */
+export const configureStore = (reducer, socket, initialState) => createStore(
+    reducer,
+    initialState,
+    applyMiddleware(
+        socketIoMiddleWare(socket),
+        routerMiddleware(history),
+        errorHandlerMiddleware,
+        thunk
+    )
 )
-
-const isFunction = arg => { return typeof arg === 'function' }
-
-const myMiddleware = (types={}) => {
-  const fired = {}
-  return store => next => action => {
-    const result = next(action)
-    const cb = types[action.type]
-    if(cb && !fired[action.type]){
-      if(!isFunction(cb)) throw new Error("action's type value must be a function")
-      fired[action.type] = true
-      cb({getState: store.getState, dispatch: store.dispatch, action})
-    }
-    return result
-  }
-}
-
-const socketIoMiddleWare = socket => ({dispatch, getState}) => {
-  if(socket) socket.on('action', dispatch)
-  return next => action => {
-    if(socket && action.type && action.type.indexOf('SERVER_') === 0) socket.emit('action', action)
-    return next(action)
-  }
-}

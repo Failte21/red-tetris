@@ -3,7 +3,7 @@ import ReactDom from 'react-dom'
 import createLogger from 'redux-logger'
 import thunk from 'redux-thunk'
 import { createStore, applyMiddleware } from 'redux'
-import { Provider } from 'react-redux'                                                                                                                                                    
+import { Provider } from 'react-redux'
 import storeStateMiddleWare from './middleware/storeStateMiddleWare'
 import socketIoMiddleWare from './middleware/socketIoMiddleware'
 import io from 'socket.io-client'
@@ -21,7 +21,7 @@ const history = createHistory()
 const initialState = {}
 const socket = io(params.server.url)
 
-const store = createStore(
+export const store = createStore(
   reducer,
   initialState,
   applyMiddleware(thunk, createLogger(), socketIoMiddleWare(socket), routerMiddleware(history), errorHandlerMiddleware)

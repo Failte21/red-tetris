@@ -1,27 +1,68 @@
 import chai from "chai"
-import {startServer, configureStore} from './helpers/server'
-import rootReducer from '../src/client/reducers'
-import {ping} from '../src/client/actions/server'
+import {configureStore, startServer} from "./helpers/server";
+import * as params from "../params";
 import io from 'socket.io-client'
-import params from '../params'
+import reducer from "../src/client/reducers/alert";
+import {ping} from "../src/client/actions/server";
+const initialState = {}
+const socket = io(params.server.url)
 
-chai.should()
+const assert = chai.assert
+const expect = chai.expect
+const should = chai.should()
 
-describe('Fake server test', function(){
-  let tetrisServer
-  before(cb => startServer( params.server, function(err, server){
-    tetrisServer = server
-    cb()
-  }))
+/**
+ * I realized writing this idk what it's supposed to be testing
+ * (the middleware exists? that it works? that the server config works?
+ *
+ */
 
-  after(function(done){tetrisServer.stop(done)})
+// describe('server test', function() {
+//     let mockServer
+//         before(cb => startServer( params.server, function(err, server){
+//         mockServer = server
+//         cb()
+//     }))
+//
+//     after(function(done){mockServer.stop(done)})
+//
+//   it('should pong on SERVER_PING', function(done){
+//     const initialState = {}
+//     const socket = io(params.server.url)
+//     const store =  configureStore(reducer, socket, initialState)
+//     store.dispatch(ping())
+//   });
+// });
 
-  it('should pong', function(done){
-    const initialState = {}
-    const socket = io(params.server.url)
-    const store =  configureStore(rootReducer, socket, initialState, {
-      'pong': () =>  done()
-    })
-    store.dispatch(ping())
-  });
-});
+
+/**
+ * Original RP test below
+ */
+
+// import chai from "chai"
+// import {startServer, configureStore} from './helpers/server'
+// import rootReducer from '../src/client/reducers'
+// import {ping} from '../src/client/actions/server'
+// import io from 'socket.io-client'
+// import params from '../params'
+//
+// chai.should()
+//
+// describe('Fake server test', function(){
+//   let tetrisServer
+//   before(cb => startServer( params.server, function(err, server){
+//     tetrisServer = server
+//     cb()
+//   }))
+//
+//   after(function(done){tetrisServer.stop(done)})
+//
+//   it('should pong', function(done){
+//     const initialState = {}
+//     const socket = io(params.server.url)
+//     const store =  configureStore(rootReducer, socket, initialState, {
+//       'pong': () =>  done()
+//     })
+//     store.dispatch(ping())
+//   });
+// });
