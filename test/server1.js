@@ -2,10 +2,10 @@ import chai from "chai"
 import {configureStore, startServer} from "./helpers/server";
 import * as params from "../params";
 import clientIo from 'socket.io-client'
+import io from 'socket.io'
 import reducer from "../src/client/reducers/alert";
 import {ping} from "../src/client/actions/server";
 import {SERVER_ADD_PLAYER, UPDATE_GAME} from "../src/client/actions/actionTypes";
-const initialState = {}
 
 import _ from 'lodash'
 
@@ -31,28 +31,43 @@ const examples = {
 
 describe('game state updates via websockets', function() {
     let mockServer
-    before(cb => startServer( params.server, function(err, server){
+    beforeEach(cb => startServer( params.server, function(err, server){
+        console.log("BEFORE")
         mockServer = server
         player1 = clientIo(params.server.url)
         player2 = clientIo(params.server.url)
         cb()
     }))
-    after(function (done) {
+    afterEach(function (done) {
         player1.disconnect()
         player2.disconnect()
         mockServer.stop(done)
+        console.log("AFTER")
     })
 
-    describe('connecting players', function(){
+    // describe('connecting players', function(){
         it('creating new room should trigger UPDATE_ROOM.', function(done){
             player1.emit(SERVER_ADD_PLAYER, examples.SERVER_ADD_PLAYER[0].payload)
             player1.on('action', (action) => {
                 expect(action).to.deep.include({type: UPDATE_GAME})
-                expect(action).to.have.property('payload')
+                done()
+            })
+        })
+
+    it('joining an existing room should send UPDATE_ROOM to everyone in the room.', function(done){
+        player1.emit(SERVER_ADD_PLAYER, examples.SERVER_ADD_PLAYER[0].payload)
+        player1.on('action', (action) => {
+            expect(action).to.deep.include({type: UPDATE_GAME})
+            player2.emit(SERVER_ADD_PLAYER, examples.SERVER_ADD_PLAYER[1].payload)
+            player1.on('action', (action) => {
+                expect(action).to.deep.include({type: UPDATE_GAME})
                 done()
             })
         })
     })
+
+
+    // })
 })
 
 

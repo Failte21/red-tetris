@@ -21,7 +21,7 @@ const examples = [
 ]
 
 describe('player reducer', function(){
-    it('state is an empty player when action is undefined', () => {
+    it('state is equal to empty player when action is undefined', () => {
         expect(playerReducer(undefined, {})).to.eql(emptyPlayer)
     })
 });
