@@ -2,8 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Spectre from '../components/Spectre'
-import BoardMeta from '../components/boardMeta/boardMeta'
-import './app.scss'
+import BoardMeta from '../components/BoardMeta'
+import "../styles/app.scss"
 import {startGameLoop} from "../actions/server";
 import Board from "./Board";
 
@@ -16,9 +16,9 @@ const GameRoom = ({
                       isInProgress,
                       spectres,
                       pieceLineUp,
-                      startGameLoop
+                      startGameLoop,
+                    boardData,
                   }) => {
-    const mySpectre = spectres.find(s => s.playerName === playerName)
 
     return (
         <div className={'tetris'}>
@@ -26,9 +26,9 @@ const GameRoom = ({
                 <Board
                     isInProgress={isInProgress}
                     playerName={playerName}
-                    boardData={mySpectre.spectreData}
                     pieceLineUp={pieceLineUp}
-                    isPlayer={isPlaying} />
+                    isPlayer={isPlaying}
+                    boardData={boardData} />
 
                 {leadPlayerName === playerName &&
                     <button onClick={()=>startGameLoop(roomName)}>START GAME</button>}
@@ -65,7 +65,8 @@ const mapStateToProps = (state) => {
         isInProgress: state.game.isInProgress,
         leadPlayerName: state.game.leadPlayerName,
         pieceLineUp: state.game.pieceLineUp,
-        spectres: state.game.players.map(p=>({playerName: p.playerName, spectreData: p.spectre, isPlaying: p.isPlaying}))
+        spectres: state.game.players.map(p=>({playerName: p.playerName, spectreData: p.spectre, isPlaying: p.isPlaying})),
+        boardData: state.player.spectre
     }
 }
 

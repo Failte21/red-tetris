@@ -10,7 +10,7 @@ export const showUserMessage = (message) => {
     })
 }
 
-export const parseRoute = location => dispatch => {
+export const parseRoute = (location) => dispatch => {
     const noHash = !location.hash || location.hash.length === 1
 
     if (noHash) return dispatch(showUserMessage(WELCOME_MSG))

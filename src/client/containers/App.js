@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import './app.scss'
-import Game from "./Game"
+import '../styles/app.scss'
+import Game from "./GameRoom"
 
 const App = ({
                  roomName,

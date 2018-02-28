@@ -8,6 +8,7 @@ export const ALERT_POP = 'ALERT_POP'
 export const ADD_PLAYER = 'ADD_PLAYER'
 export const REMOVE_PLAYER = 'REMOVE_PLAYER'
 export const SUBSCRIBE_PLAYER = 'SUBSCRIBE_PLAYER'
+export const UPDATE_PLAYER = 'UPDATE_PLAYER'
 
 export const ERROR_MESSAGE = 'ERROR_MESSAGE'
 export const USER_MESSAGE = 'USER_MESSAGE'

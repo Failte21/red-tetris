@@ -211,7 +211,7 @@ $ npm run srv-dist
 src/client/actions/alert.js -> dist/client/actions/alert.js
 src/client/actions/server.js -> dist/client/actions/server.js
 src/client/components/test.js -> dist/client/components/test.js
-src/client/containers/app.js -> dist/client/containers/app.js
+src/client/containers/App.js -> dist/client/containers/App.js
 src/client/index.js -> dist/client/index.js
 src/client/middleware/storeStateMiddleWare.js -> dist/client/middleware/storeStateMiddleWare.js
 src/client/reducers/alert.js -> dist/client/reducers/alert.js

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import '../components/board/board.scss'
+import '../styles/board.scss'
 import Spectre from "../components/Spectre";
 
 const Board = ({ isInProgress, playerName, boardData, pieceLineUp, isPlaying }) => (

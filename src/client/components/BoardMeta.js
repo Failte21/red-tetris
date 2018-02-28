@@ -1,5 +1,5 @@
 import React from 'react'
-import './boardMeta.scss'
+import '../styles/boardMeta.scss'
 
 const BoardMeta = ({roomName, playerName, isPlaying, isInProgress, leadPlayerName}) => {
 	return (
