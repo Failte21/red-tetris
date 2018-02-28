@@ -2,27 +2,53 @@ import {configureStore} from './helpers/server'
 import reducer from '../src/client/reducers'
 import chai from "chai"
 import playerReducer, {emptyPlayer} from "../src/client/reducers/playerReducer";
-import {UPDATE_PLAYER} from "../src/client/actions/actionTypes";
+import {ERROR, UPDATE_PLAYER} from "../src/client/actions/actionTypes";
 import {BOARD} from "../src/common/game";
 
 const assert = chai.assert
 const expect = chai.expect
 const should = chai.should()
 
-const examples = [
-    {desc: 'empty player', payload: emptyPlayer },
-    {desc: 'valid player', payload: {
+const examples = {
+    emptyPlayer: emptyPlayer,
+    validPlayer1: {
         playerName: 'jane',
         socketId: 'abcdefg12345678',
         isPlaying: true,
         spectre: BOARD.EMPTY_NEW_BOARD
-        }
+    },
+    validPlayer2: {
+        playerName: 'steve',
+        socketId: 'zyxwv9876',
+        isPlaying: false,
+        spectre: BOARD.EMPTY_NEW_BOARD
     }
-]
+}
 
 describe('player reducer', function(){
-    it('state is equal to empty player when action is undefined', () => {
-        expect(playerReducer(undefined, {})).to.eql(emptyPlayer)
+    it('should return current state when action is undefined', () => {
+        expect(playerReducer(examples.emptyPlayer, {})).to.eql(examples.emptyPlayer)
+        expect(playerReducer(examples.validPlayer1, {})).to.eql(examples.validPlayer1)
+    })
+    it('should return a deep clone of payload on UPDATE_PLAYER', () => {
+        expect(playerReducer(examples.emptyPlayer, {
+            type: UPDATE_PLAYER, payload: examples.validPlayer1}))
+            .to.eql(examples.validPlayer1)
+        expect(playerReducer(examples.validPlayer1, {
+            type: UPDATE_PLAYER, payload: examples.validPlayer2}))
+            .to.eql(examples.validPlayer2)
+    })
+    it('should revert to empty player (default state) on ERROR with redirect', () => {
+        expect(playerReducer(examples.validPlayer1, {
+            type: ERROR, payload: {
+                errorMessage: 'some error', redirect: 'true' }}))
+            .to.eql(examples.emptyPlayer)
+    })
+    it('should keep current state on ERROR with NO redirect', () => {
+        expect(playerReducer(examples.validPlayer1, {
+            type: ERROR, payload: {
+                errorMessage: 'some error', redirect: 'false' }}))
+            .to.eql(examples.validPlayer1)
     })
 });
 

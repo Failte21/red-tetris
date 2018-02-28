@@ -10,7 +10,6 @@ const socketIoMiddleWare = socket => ({dispatch, getState}) => {
         if (socket && action.type === '@@router/LOCATION_CHANGE')
             dispatch(parseRoute(action.payload))
         if (socket && action.type && action.type.indexOf('SERVER_') === 0) {
-            console.log("action.type", action.type)
             socket.emit(action.type, action.payload)
         }
         if (socket && action.type === UPDATE_GAME) {

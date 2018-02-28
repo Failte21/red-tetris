@@ -23,7 +23,7 @@ const gameReducer = (state = defaultState, action) => {
             console.log("action.payload", action.payload)
             return _.cloneDeep(action.payload)
         case ERROR:
-            return action.payload.redirect ? defaultState : state
+            return action.payload.redirect === 'true' ? defaultState : state
 		default:
 			return state
 	}
