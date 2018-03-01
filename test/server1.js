@@ -17,16 +17,14 @@ let player1
 let player2
 
 const examples = {
-    'SERVER_ADD_PLAYER': [
-        {
-            desc: 'player1 valid',
-            payload: {roomName: 'room1408', playerName: 'lsimon'}
+    'SERVER_ADD_PLAYER': {
+        validPlayer1: {
+            roomName: 'room1408', playerName: 'lsimon'
         },
-        {
-            desc: 'player2 valid',
-            payload: {roomName: 'room1408', playerName: 'ekelen'}
+        validPlayer2: {
+            roomName: 'room1408', playerName: 'ekelen'
         }
-    ]
+    }
 }
 
 describe('game state updates via websockets', function() {
@@ -46,19 +44,21 @@ describe('game state updates via websockets', function() {
     })
 
     // describe('connecting players', function(){
-        it('creating new room should trigger UPDATE_ROOM.', function(done){
-            player1.emit(SERVER_ADD_PLAYER, examples.SERVER_ADD_PLAYER[0].payload)
-            player1.on('action', (action) => {
-                expect(action).to.deep.include({type: UPDATE_GAME})
-                done()
-            })
-        })
-
-    it('joining an existing room should send UPDATE_ROOM to everyone in the room.', function(done){
-        player1.emit(SERVER_ADD_PLAYER, examples.SERVER_ADD_PLAYER[0].payload)
+    it('creating new room should trigger UPDATE_ROOM with payload with correct roomname and leadername', function(done){
+        player1.emit(SERVER_ADD_PLAYER, examples.SERVER_ADD_PLAYER.validPlayer1)
+        const { roomName, playerName } = examples.SERVER_ADD_PLAYER.validPlayer1
         player1.on('action', (action) => {
             expect(action).to.deep.include({type: UPDATE_GAME})
-            player2.emit(SERVER_ADD_PLAYER, examples.SERVER_ADD_PLAYER[1].payload)
+            expect(action.payload).to.deep.include({roomName, leadPlayerName: playerName})
+            done()
+        })
+    })
+
+    it('joining an existing room should send UPDATE_ROOM to everyone in the room.', function(done){
+        player1.emit(SERVER_ADD_PLAYER, examples.SERVER_ADD_PLAYER.validPlayer1)
+        player1.on('action', (action) => {
+            expect(action).to.deep.include({type: UPDATE_GAME})
+            player2.emit(SERVER_ADD_PLAYER, examples.SERVER_ADD_PLAYER.validPlayer2)
             player1.on('action', (action) => {
                 expect(action).to.deep.include({type: UPDATE_GAME})
                 done()

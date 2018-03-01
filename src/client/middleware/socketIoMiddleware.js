@@ -13,7 +13,7 @@ const socketIoMiddleWare = socket => ({dispatch, getState}) => {
             socket.emit(action.type, action.payload)
         }
         if (socket && action.type === UPDATE_GAME) {
-            console.log("action.payload.players.filter(p => p.socketId === socket.id)}", action.payload.players.find(p => p.socketId === socket.id))
+            //console.log("player sent from UPDATE_GAME for UPDATE_PLAYER: ", action.payload.players.find(p => p.socketId === socket.id))
             dispatch({type: UPDATE_PLAYER, payload: action.payload.players.find(p => p.socketId === socket.id)})
         }
 		return next(action)
