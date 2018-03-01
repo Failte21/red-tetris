@@ -11,12 +11,14 @@ const should = chai.should()
 
 const examples = {
     emptyPlayer: emptyPlayer,
+
     validPlayer1: {
         playerName: 'jane',
         socketId: 'abcdefg12345678',
         isPlaying: true,
         spectre: BOARD.EMPTY_NEW_BOARD
     },
+
     validPlayer2: {
         playerName: 'steve',
         socketId: 'zyxwv9876',

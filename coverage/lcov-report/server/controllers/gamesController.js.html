@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for server/controllers/gamesController.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">all files</a> / <a href="index.html">server/controllers/</a> gamesController.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>8/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">61.11% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>11/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">57.14% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>4/7</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">80% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>8/10</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
+    ERROR, JOIN_GAME, NEW_GAME, REMOVE_PLAYER, START_GAME_LOOP, UPDATE_GAME,
+    UPDATE_SPECTRE
+} from '../../client/actions/actionTypes'
+import {CANNOT_ENTER_GAME_IN_PROGRESS, EXISTING_USERNAME, GENERIC_ERROR} from '../../common/errors'
+import {Player} from '../models/player'
+import {Game} from '../models/game'
+import * as pieceController from './pieceController'
+import _ from 'lodash'
+&nbsp;
+import assert from 'assert'
+&nbsp;
+const games = []
+&nbsp;
+const get = (fieldName, fieldValue) =&gt; games.find(game =&gt; game[fieldName] === fieldValue)
+const getGameBySocketId = socketId =&gt; games.find(game =&gt; !!game.getPlayerBySocketId(socketId))
+&nbsp;
+export const joinOrCreate = (socket, io) =&gt; ({roomName, playerName}) =&gt; {
+    //console.log(`1. ${playerName} sent to join ${roomName} by client.`)
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (getGameBySocketId(socket.id)) removeFromPreviousGame(socket, io)
+    const game = get('roomName', roomName)
+    if (!game) return create(roomName, playerName, socket)
+    //console.log(`3. adding ${playerName} to existing game ${roomName}`)
+    return join(game, playerName, socket, io)
+}
+&nbsp;
+export const onGameStart = (socket, io) =&gt; <span class="fstat-no" title="function not covered" >({roomName}) =&gt; {</span>
+    let game = get('roomName', roomName)
+<span class="cstat-no" title="statement not covered" >    if (!game) r</span>eturn
+    return io.in(roomName).emit('action', {type: UPDATE_GAME, payload: game.startGame() })
+}
+&nbsp;
+export const onUpdateSpectre = (socket, io) =&gt; <span class="fstat-no" title="function not covered" >({playerName, roomName, spectreData}) =&gt; {</span>
+    let game = get('roomName', roomName)
+    let player = game.getPlayerBySocketId(socket.id)
+    //assert(game &amp;&amp; player, 'game or player are missing.')
+<span class="cstat-no" title="statement not covered" >    player.spectre = spectreData // will this update to game too? hope so</span>
+    io.in(roomName, {type: UPDATE_GAME, payload: game})
+}
+&nbsp;
+const create = (roomName, playerName, socket) =&gt; {
+    //console.log(`3. adding ${playerName} to new game ${roomName}`)
+    const player = new Player(playerName, socket.id)
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!player) return socket.emit('action', {type: ERROR, payload: {errorMessage: GENERIC_ERROR, redirect: 'true'}})
+    const game = new Game(roomName, player)
+    //assert(game &amp;&amp; game.getPlayerBySocketId(socket.id), 'missing game or player')
+    games.push(game)
+    socket.join(roomName)
+    //console.log('6. final players in game before telling client(s):', game.playerNames)
+    return socket.emit('action', {type: UPDATE_GAME, payload: game})
+}
+&nbsp;
+const join = (game, playerName, socket, io) =&gt; {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (game.hasPlayer(playerName)) return socket.emit('action', {type: ERROR, payload: {errorMessage: EXISTING_USERNAME, redirect: 'true'}})
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (game.isInProgress) return socket.emit('action', {type: ERROR, payload: {errorMessage: CANNOT_ENTER_GAME_IN_PROGRESS, redirect: 'true'}})
+&nbsp;
+    const player = new Player(playerName, socket.id)
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!player) return socket.emit('action', {type: ERROR, payload: {errorMessage: GENERIC_ERROR, redirect: 'true'}})
+    game.addPlayer(player)
+    socket.join(game.roomName)
+    //console.log('6. final players in game before telling client(s):', game.playerNames)
+    return io.sockets.in(game.roomName).emit('action', {type: UPDATE_GAME, payload: game})
+}
+&nbsp;
+export const removeFromPreviousGame = <span class="fstat-no" title="function not covered" >(socket, io) =&gt; {</span>
+    let game = getGameBySocketId(socket.id)
+    //console.log(`1. unsubscribing ${game.getPlayerBySocketId(socket.id).playerName} from ${game.roomName}`)
+    socket.leave(game.roomName)
+    return disconnect(socket, io)()
+}
+&nbsp;
+export const disconnect = (socket, io) =&gt; () =&gt; {
+    let game = getGameBySocketId(socket.id)
+    if (!game) return
+    //console.log(`2. disconnecting ${game.getPlayerBySocketId(socket.id) ? game.getPlayerBySocketId(socket.id).playerName : socket.id} from ${game.roomName}`)
+    game.disconnectPlayer(socket.id)
+    if (game.hasPlayers) {
+        //console.log(`3. telling other players in ${game.roomName} that a player has left.`)
+        return io.sockets.in(game.roomName).emit('action', {type: UPDATE_GAME, payload: game})
+    }
+    //console.log(`3. deleting ${game.roomName} from games`)
+    return _.remove(games, {roomName: game.roomName})
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Mar 01 2018 12:45:48 GMT+0100 (CET)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

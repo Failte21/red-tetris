@@ -94,7 +94,7 @@ Target is to test `actions` and `reducers` in one time. You can always split tho
 Look at the code :
 
 ```
-//cat redux1.js
+//cat reducers.js
 // 1
 import {configureStore} from './helpers/server'
 // 2

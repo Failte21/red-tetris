@@ -10,7 +10,7 @@ require('jsdom-global')()
 
 // const io = require('socket.io').listen(params.server.port)
 
-export const fakeHistory = createHistory('/')
+// export const fakeHistory = createHistory('/')
 
 export const startServer = (params, cb) => {
   server.create(params) // is proper io getting passed too?
@@ -27,7 +27,6 @@ export const configureStore = (reducer, socket, initialState) => createStore(
     initialState,
     applyMiddleware(
         socketIoMiddleWare(socket),
-        routerMiddleware(fakeHistory),
         errorHandlerMiddleware,
         thunk
     )
