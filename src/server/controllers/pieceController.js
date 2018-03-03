@@ -14,6 +14,14 @@ export const drawPiece = (shape) => {
     drawnPiece.forEach((row) => console.log(row) + '\n')
 }
 
+// takes drawPiece(TETROS.SHAPES[whatever]) as param
+export const rotate = (shape) =>  {
+    const n = shape[0].length
+    return shape.map((row, y) => (
+        row.map((pt, x) => shape[n - 1 - x][y])
+    ))
+}
+
 
 export const generatePieceList = (len) => {
     return _.times(len, _.random.bind(0, TETROS.SHAPES.length))
