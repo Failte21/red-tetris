@@ -49,7 +49,7 @@ const examples = {
 
 describe('getVisibleBoard(boardData)', () => {
     for (let eg in examples) {
-        it(`returns only visible rows of a ${examples[eg].desc}`, done => {
+        it(`chops off hidden layers from a ${examples[eg].desc}`, done => {
             expect(getVisibleBoard(examples[eg].data)).to.have.lengthOf(examples[eg].data.length - 2)
             expect(_.last(getVisibleBoard(examples[eg].data))).to.eql(_.last(examples[eg].data))
             expect(getVisibleBoard(examples[eg].data)[0]).to.eql(examples[eg].data[2])
