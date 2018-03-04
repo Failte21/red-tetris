@@ -1,5 +1,5 @@
 import chai from "chai"
-import {checkValidHashURL} from "../src/common/inputValidation"
+import {checkValidHashURL} from "../src/client/utils/inputValidation"
 import {INVALID_PLAYER_NAME, INVALID_ROOM_NAME, INVALID_URL_PARAMS} from "../src/common/errors"
 
 const assert = chai.assert

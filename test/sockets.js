@@ -1,10 +1,7 @@
 import chai from "chai"
-import {configureStore, startServer} from "./helpers/server";
+import {startServer} from "./helpers/server";
 import * as params from "../params";
 import clientIo from 'socket.io-client'
-import io from 'socket.io'
-import reducer from "../src/client/reducers/alert";
-import {ping} from "../src/client/actions/server";
 import {SERVER_ADD_PLAYER, UPDATE_GAME} from "../src/client/actions/actionTypes";
 
 import _ from 'lodash'
@@ -29,11 +26,11 @@ const examples = {
 
 describe('game state updates via websockets', function() {
     let mockServer
-    beforeEach(cb => startServer( params.server, function(err, server){
+    beforeEach(cb => startServer( params.test, function(err, server){
         console.log("BEFORE")
         mockServer = server
-        player1 = clientIo(params.server.url)
-        player2 = clientIo(params.server.url)
+        player1 = clientIo(params.test.url)
+        player2 = clientIo(params.test.url)
         cb()
     }))
     afterEach(function (done) {
@@ -83,7 +80,7 @@ describe('game state updates via websockets', function() {
 
 // describe('server test', function() {
 //     let mockServer
-//         before(cb => startServer( params.server, function(err, server){
+//         before(cb => startServer( params.test, function(err, server){
 //         mockServer = server
 //         cb()
 //     }))
@@ -92,7 +89,7 @@ describe('game state updates via websockets', function() {
 //
 //   it('should pong on SERVER_PING', function(done){
 //     const initialState = {}
-//     const socket = io(params.server.url)
+//     const socket = io(params.test.url)
 //     const store =  configureStore(reducer, socket, initialState)
 //     store.dispatch(ping())
 //   });
@@ -114,7 +111,7 @@ describe('game state updates via websockets', function() {
 //
 // describe('Fake server test', function(){
 //   let tetrisServer
-//   before(cb => startServer( params.server, function(err, server){
+//   before(cb => startServer( params.test, function(err, server){
 //     tetrisServer = server
 //     cb()
 //   }))
@@ -123,7 +120,7 @@ describe('game state updates via websockets', function() {
 //
 //   it('should pong', function(done){
 //     const initialState = {}
-//     const socket = io(params.server.url)
+//     const socket = io(params.test.url)
 //     const store =  configureStore(rootReducer, socket, initialState, {
 //       'pong': () =>  done()
 //     })
