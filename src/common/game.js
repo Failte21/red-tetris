@@ -16,7 +16,7 @@ export const getSpectreFromMatrix = (visibleBoardData) => (
 )
 
 export const TETROS = {
-    SHAPES:
+    PIECES:
         [	[[0,1],[1,1],[2,1],[3,1]],	// I
             [[0,0],[0,1],[1,1],[1,0]],	// O
             [[0,1],[1,1],[2,1],[2,0]],	// L
