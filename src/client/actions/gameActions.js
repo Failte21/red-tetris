@@ -1,4 +1,4 @@
-import {checkValidHashURL} from "../../common/inputValidation"
+import {checkValidHashURL} from "../utils/inputValidation"
 import {ERROR, USER_MESSAGE} from './actionTypes'
 import {onPlayerEnterRoom} from "./server"
 import {WELCOME_MSG} from "../../common/messages";

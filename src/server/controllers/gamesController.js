@@ -1,11 +1,9 @@
 import {
-    ERROR, JOIN_GAME, NEW_GAME, REMOVE_PLAYER, START_GAME_LOOP, UPDATE_GAME,
-    UPDATE_SPECTRE
+    ERROR, UPDATE_GAME
 } from '../../client/actions/actionTypes'
 import {CANNOT_ENTER_GAME_IN_PROGRESS, EXISTING_USERNAME, GENERIC_ERROR} from '../../common/errors'
 import {Player} from '../models/player'
 import {Game} from '../models/game'
-import * as pieceController from './pieceController'
 import _ from 'lodash'
 
 import assert from 'assert'

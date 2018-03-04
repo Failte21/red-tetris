@@ -1,6 +1,7 @@
 import chai from "chai"
 import _ from 'lodash'
-import {getSpectreFromMatrix, getVisibleBoard} from "../src/common/game";
+import {getSpectreFromMatrix} from "../src/client/utils/geometry";
+import {getVisibleBoard} from "../src/client/utils/geometry";
 
 const assert = chai.assert
 const expect = chai.expect

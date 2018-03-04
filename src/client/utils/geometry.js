@@ -28,3 +28,11 @@ export const rotate = (shape) =>  {
         row.map((pt, x) =>  x <= n ? shape[n - x][y] : 0)
     ))
 }
+export const applyMalusToBoard = (boardData) => boardData.slice(1)
+export const getVisibleBoard = (boardData) => boardData.slice(2)
+export const getSpectreFromMatrix = (visibleBoardData) => (
+    visibleBoardData.reduce((accRow, curRow, y) => (
+            curRow.map((pt, x) =>
+                (!accRow[x] && curRow[x] ? y : accRow[x])))
+        , _.fill(new Array(visibleBoardData[0].length), null))
+)
