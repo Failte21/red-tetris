@@ -60,15 +60,15 @@ describe('getVisibleBoard(boardData)', () => {
 
 describe('getSpectreFromMatrix(visibleBoardData', () => {
     let spectre
-    let visibleEmptyBoard = getVisibleBoard(examples.validEmptyBoard.data)
-    let visibleInProgressBoard = getVisibleBoard(examples.validBoardInProgress.data)
+    let emptyBoard = examples.validEmptyBoard.data
+    let inProgressBoard = examples.validBoardInProgress.data
     it (`if given matrix of 0s, returns a string of 'null' that is same length as matrix width.`, () => {
-        spectre = getSpectreFromMatrix(visibleEmptyBoard)
-        expect(spectre).to.have.lengthOf(visibleEmptyBoard[0].length)
+        spectre = getSpectreFromMatrix(emptyBoard)
+        expect(spectre).to.have.lengthOf(emptyBoard[0].length)
         assert(spectre.every(val => _.isNull(val)), 'not every val is null')
     })
     it(`if given matrix which contains no values > 0 in first col, will return array with null in first column only.`, () => {
-        spectre = getSpectreFromMatrix(visibleInProgressBoard)
+        spectre = getSpectreFromMatrix(inProgressBoard)
         assert(_.isNull(spectre[0]) && spectre.slice(1).every(val => !_.isNull(val)), 'not an array with only first value as null')
     })
 })

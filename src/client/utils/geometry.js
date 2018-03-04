@@ -28,11 +28,23 @@ export const rotate = (shape) =>  {
         row.map((pt, x) =>  x <= n ? shape[n - x][y] : 0)
     ))
 }
+
+// assumes all boardData including hidden rows
 export const applyMalusToBoard = (boardData) => boardData.slice(1)
+
+// cuts off hidden first 2 rows of board for front-end
 export const getVisibleBoard = (boardData) => boardData.slice(2)
-export const getSpectreFromMatrix = (visibleBoardData) => (
-    visibleBoardData.reduce((accRow, curRow, y) => (
+
+// Reduces 2D board to minimal data needed for spectre
+export const getSpectreFromMatrix = (boardData) => {
+    const visibleBoardData = getVisibleBoard(boardData)
+    const boardWidth = boardData[0].length
+    return visibleBoardData.reduce((accRow, curRow, y) => (
             curRow.map((pt, x) =>
                 (!accRow[x] && curRow[x] ? y : accRow[x])))
-        , _.fill(new Array(visibleBoardData[0].length), null))
-)
+        , Array(boardWidth).fill(null))
+}
+
+
+
+

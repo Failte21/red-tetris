@@ -1,13 +1,11 @@
 import _ from 'lodash'
 
-// assumes all boardData including hidden rows
 
 
-// cuts off hidden first 2 rows of board (for doing mutations above)
 
 
-// Reduces 2D board to minimal data needed for spectre
-// assumes input of visible board data only (no hidden)
+
+
 
 
 export const TETROS = {
