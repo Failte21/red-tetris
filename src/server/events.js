@@ -1,9 +1,7 @@
 import assert from "assert"
 import debug from 'debug'
 import {
-    ANNOUNCE_DELETE_IN_PROGRESS_GAME, ANNOUNCE_DELETE_READY_GAME, ANNOUNCE_NEW_GAME, DELETE_ALL, JOIN_GAME, NEW_GAME,
-    REMOVE_PLAYER, SERVER_ADD_PLAYER, SERVER_REMOVE_PLAYER, SERVER_START_GAME_LOOP, SERVER_UPDATE_SPECTRE,
-    SUBSCRIBE_PLAYER
+    SERVER_ADD_PLAYER, SERVER_START_GAME_LOOP, SERVER_UPDATE_SPECTRE
 } from '../client/actions/actionTypes'
 import * as gamesController from './controllers/gamesController';
 

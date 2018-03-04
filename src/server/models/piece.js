@@ -4,6 +4,6 @@ import {TETROS} from "../../common/game";
 export class Piece {
     constructor(index) {
         this.index = index
-        this.shape = TETROS.SHAPES[index]
+        this.shape = TETROS.PIECES[index]
     }
 }
